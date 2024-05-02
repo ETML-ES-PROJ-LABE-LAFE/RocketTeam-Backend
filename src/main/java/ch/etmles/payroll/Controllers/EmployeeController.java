@@ -2,53 +2,41 @@ package ch.etmles.payroll.Controllers;
 
 import ch.etmles.payroll.Entities.Employee;
 import ch.etmles.payroll.Repositories.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/employees")
+@CrossOrigin(origins = "http://localhost:8081") // Allow requests from frontend URL
 public class EmployeeController {
 
     private final EmployeeRepository repository;
 
-    EmployeeController(EmployeeRepository repository){
+    @Autowired
+    public EmployeeController(EmployeeRepository repository) {
         this.repository = repository;
     }
 
-    /* curl sample :
-    curl -i localhost:8080/employees
-    */
-    @GetMapping("/employees")
-    List<Employee> all(){
+    @GetMapping
+    public List<Employee> getAllEmployees() {
         return repository.findAll();
     }
 
-    /* curl sample :
-    curl -i -X POST localhost:8080/employees ^
-        -H "Content-type:application/json" ^
-        -d "{\"name\": \"Russel George\", \"role\": \"gardener\"}"
-    */
-    @PostMapping("/employees")
-    Employee newEmployee(@RequestBody Employee newEmployee){
-        return repository.save(newEmployee);
+    @PostMapping
+    public Employee addEmployee(@RequestBody Employee employee) {
+        return repository.save(employee);
     }
 
-    /* curl sample :
-    curl -i localhost:8080/employees/1
-    */
-    @GetMapping("/employees/{id}")
-    Employee one(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public Employee getEmployeeById(@PathVariable Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
-    /* curl sample :
-    curl -i -X PUT localhost:8080/employees/2 ^
-        -H "Content-type:application/json" ^
-        -d "{\"name\": \"Samwise Bing\", \"role\": \"peer-to-peer\"}"
-     */
-    @PutMapping("/employees/{id}")
-    Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+    @PutMapping("/{id}")
+    public Employee updateEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
         return repository.findById(id)
                 .map(employee -> {
                     employee.setName(newEmployee.getName());
@@ -61,11 +49,8 @@ public class EmployeeController {
                 });
     }
 
-    /* curl sample :
-    curl -i -X DELETE localhost:8080/employees/2
-    */
-    @DeleteMapping("/employees/{id}")
-    void deleteEmployee(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public void deleteEmployee(@PathVariable Long id) {
         repository.deleteById(id);
     }
 }
