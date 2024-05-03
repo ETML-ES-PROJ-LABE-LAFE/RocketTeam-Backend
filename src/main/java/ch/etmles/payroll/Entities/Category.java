@@ -3,20 +3,25 @@ package ch.etmles.payroll.Entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.ManyToOne;
 import java.util.Objects;
+
 @Entity
 public class Category {
 
-    private @Id
-    @GeneratedValue Long id;
+    private @Id @GeneratedValue Long id;
     private String name;
+
+    @ManyToOne
+    private Category parentCategory;
 
     public Category() {}
 
-    public Category(String name) {
+    public Category(String name, Category parentCategory) {
         this.name = name;
+        this.parentCategory = parentCategory;
     }
+
 
     public Long getId() {
         return id;
@@ -34,12 +39,20 @@ public class Category {
         this.name = name;
     }
 
+    public Category getParentCategory() {
+        return parentCategory;
+    }
+
+    public void setParentCategory(Category parentCategory) {
+        this.parentCategory = parentCategory;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Category category)) return false;
-        return Objects.equals(id, category.id) &&
-                Objects.equals(name, category.name);
+        if (!(o instanceof Category)) return false;
+        Category category = (Category) o;
+        return Objects.equals(id, category.id) && Objects.equals(name, category.name);
     }
 
     @Override

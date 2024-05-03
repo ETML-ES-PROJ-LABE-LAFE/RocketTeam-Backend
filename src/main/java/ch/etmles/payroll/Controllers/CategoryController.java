@@ -9,47 +9,48 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
-@CrossOrigin(origins = "http://localhost:8081") // Autoriser les requêtes depuis l'URL frontend
+@CrossOrigin(origins = "http://localhost:8081") // Allow requests from frontend URL
 public class CategoryController {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryRepository repository;
 
     @Autowired
-    public CategoryController(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public CategoryController(CategoryRepository repository) {
+        this.repository = repository;
     }
 
     @GetMapping
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        return repository.findAll();
     }
 
     @PostMapping
     public Category addCategory(@RequestBody Category category) {
-        return categoryRepository.save(category);
+        return repository.save(category);
     }
 
     @GetMapping("/{id}")
     public Category getCategoryById(@PathVariable Long id) {
-        return categoryRepository.findById(id)
+        return repository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
     @PutMapping("/{id}")
     public Category updateCategory(@RequestBody Category newCategory, @PathVariable Long id) {
-        return categoryRepository.findById(id)
+        return repository.findById(id)
                 .map(category -> {
                     category.setName(newCategory.getName());
-                    return categoryRepository.save(category);
+                    category.setParentCategory(newCategory.getParentCategory());
+                    return repository.save(category);
                 })
                 .orElseGet(() -> {
                     newCategory.setId(id);
-                    return categoryRepository.save(newCategory);
+                    return repository.save(newCategory);
                 });
     }
 
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Long id) {
-        categoryRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }

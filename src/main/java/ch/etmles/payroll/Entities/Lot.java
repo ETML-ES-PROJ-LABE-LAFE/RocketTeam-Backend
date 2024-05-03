@@ -3,7 +3,7 @@ package ch.etmles.payroll.Entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.ManyToOne;
 import java.util.Objects;
 
 @Entity
@@ -11,13 +11,14 @@ public class Lot {
     private @Id
     @GeneratedValue Long id;
     private String description;
-    private String category;
+    @ManyToOne
+    private Category category;
     private double initialPrice;
     private double highestBid;
 
     public Lot() {}
 
-    public Lot(String description, String category, double initialPrice, double highestBid) {
+    public Lot(String description, Category category, double initialPrice, double highestBid) {
         this.description = description;
         this.category = category;
         this.initialPrice = initialPrice;
@@ -40,11 +41,11 @@ public class Lot {
         this.description = description;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
