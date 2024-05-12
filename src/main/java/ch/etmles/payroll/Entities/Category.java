@@ -22,7 +22,6 @@ public class Category {
         this.parentCategory = parentCategory;
     }
 
-
     public Long getId() {
         return id;
     }

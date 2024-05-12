@@ -50,6 +50,12 @@ public class LotController {
                     return lotRepository.save(newLot);
                 });
     }
+    // Endpoint pour récupérer les lots par sous-catégorie
+    @GetMapping("/bySubcategory/{subcategoryId}")
+    public List<Lot> getLotsBySubcategory(@PathVariable Long subcategoryId) {
+        // Récupérer les lots par sous-catégorie en utilisant la méthode findBySubcategoryId du repository
+        return lotRepository.findByCategory_Id(subcategoryId);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteLot(@PathVariable Long id) {
