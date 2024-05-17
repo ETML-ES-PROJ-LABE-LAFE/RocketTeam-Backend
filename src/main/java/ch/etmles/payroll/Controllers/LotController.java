@@ -52,6 +52,7 @@ public class LotController {
                 });
     }
     // Endpoint pour récupérer les lots par sous-catégorie
+    //TODO Review how you get auctions by categories (filtering or rest routing)
     @GetMapping("/bySubcategory/{subcategoryId}")
     public List<Lot> getLotsBySubcategory(@PathVariable Long subcategoryId) {
         // Récupérer les lots par sous-catégorie en utilisant la méthode findBySubcategoryId du repository
