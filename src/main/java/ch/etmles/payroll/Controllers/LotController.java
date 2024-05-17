@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/lots")
+//TODO Remove french content
 @CrossOrigin(origins = "http://localhost:8081") // Autoriser les requêtes depuis l'URL frontend
 public class LotController {
 

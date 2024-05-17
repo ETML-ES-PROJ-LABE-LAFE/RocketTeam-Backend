@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
+//TODO Cross origin is hard coded in each controller
 @CrossOrigin(origins = "http://localhost:8081") // Allow requests from frontend URL
 public class CategoryController {
 
