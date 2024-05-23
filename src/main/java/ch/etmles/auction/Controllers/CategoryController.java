@@ -1,7 +1,7 @@
-package ch.etmles.payroll.Controllers;
+package ch.etmles.auction.Controllers;
 
-import ch.etmles.payroll.Entities.Category;
-import ch.etmles.payroll.Repositories.CategoryRepository;
+import ch.etmles.auction.Entities.Category;
+import ch.etmles.auction.Repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,8 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
-//TODO Cross origin is hard coded in each controller
-@CrossOrigin(origins = "http://localhost:8081") // Allow requests from frontend URL
 public class CategoryController {
 
     private final CategoryRepository repository;
@@ -48,10 +46,5 @@ public class CategoryController {
                     newCategory.setId(id);
                     return repository.save(newCategory);
                 });
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable Long id) {
-        repository.deleteById(id);
     }
 }

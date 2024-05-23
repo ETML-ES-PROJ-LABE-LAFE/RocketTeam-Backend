@@ -1,7 +1,7 @@
-package ch.etmles.payroll.Repositories;
+package ch.etmles.auction.Repositories;
 
-import ch.etmles.payroll.Entities.Category;
-import ch.etmles.payroll.Entities.Lot;
+import ch.etmles.auction.Entities.Category;
+import ch.etmles.auction.Entities.Lot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

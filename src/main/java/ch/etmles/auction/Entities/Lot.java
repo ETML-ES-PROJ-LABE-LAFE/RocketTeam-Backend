@@ -1,4 +1,4 @@
-package ch.etmles.payroll.Entities;
+package ch.etmles.auction.Entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +25,7 @@ public class Lot {
         this.highestBid = highestBid;
     }
 
+    //can't delete it. if deleted, create bug in the frontend
     public Long getId() {
         return id;
     }
@@ -68,7 +69,8 @@ public class Lot {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Lot lot)) return false;
+        if (!(o instanceof Lot)) return false;
+        Lot lot = (Lot) o;
         return Objects.equals(id, lot.id) &&
                 Objects.equals(description, lot.description) &&
                 Objects.equals(category, lot.category);

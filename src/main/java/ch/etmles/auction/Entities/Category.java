@@ -1,4 +1,4 @@
-package ch.etmles.payroll.Entities;
+package ch.etmles.auction.Entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class Category {
         this.parentCategory = parentCategory;
     }
 
-    //TODO method never used. Keep it and use it, or delete it.
+    //can't delete it. if deleted, create bug in the frontend
     public Long getId() {
         return id;
     }
@@ -51,8 +51,6 @@ public class Category {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Category)) return false;
-        //TODO follow IDE advice
-        //TODO remove "payroll namespace" reference of your project
         Category category = (Category) o;
         return Objects.equals(id, category.id) && Objects.equals(name, category.name);
     }

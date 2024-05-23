@@ -1,10 +1,10 @@
-package ch.etmles.payroll;
+package ch.etmles.auction;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PayrollApplicationTests {
+class AuctionApplicationTests {
 
 	@Test
 	void contextLoads() {

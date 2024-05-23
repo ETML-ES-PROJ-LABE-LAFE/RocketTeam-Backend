@@ -1,6 +1,6 @@
-package ch.etmles.payroll.Repositories;
+package ch.etmles.auction.Repositories;
 
-import ch.etmles.payroll.Entities.Lot;
+import ch.etmles.auction.Entities.Lot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

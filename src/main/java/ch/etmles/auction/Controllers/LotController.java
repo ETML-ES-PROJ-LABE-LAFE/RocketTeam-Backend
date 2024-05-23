@@ -1,7 +1,7 @@
-package ch.etmles.payroll.Controllers;
+package ch.etmles.auction.Controllers;
 
-import ch.etmles.payroll.Entities.Lot;
-import ch.etmles.payroll.Repositories.LotRepository;
+import ch.etmles.auction.Entities.Lot;
+import ch.etmles.auction.Repositories.LotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,8 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/lots")
-//TODO Remove french content
-@CrossOrigin(origins = "http://localhost:8081") // Autoriser les requêtes depuis l'URL frontend
 public class LotController {
 
     private final LotRepository lotRepository;
@@ -51,11 +49,10 @@ public class LotController {
                     return lotRepository.save(newLot);
                 });
     }
+
     // Endpoint pour récupérer les lots par sous-catégorie
-    //TODO Review how you get auctions by categories (filtering or rest routing)
-    @GetMapping("/bySubcategory/{subcategoryId}")
+    @GetMapping("/categories/{subcategoryId}/lots")
     public List<Lot> getLotsBySubcategory(@PathVariable Long subcategoryId) {
-        // Récupérer les lots par sous-catégorie en utilisant la méthode findBySubcategoryId du repository
         return lotRepository.findByCategory_Id(subcategoryId);
     }
 

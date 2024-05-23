@@ -1,13 +1,12 @@
-package ch.etmles.payroll;
+package ch.etmles.auction;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PayrollApplication {
+public class AuctionApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PayrollApplication.class, args);
+		SpringApplication.run(AuctionApplication.class, args);
 	}
-
 }
