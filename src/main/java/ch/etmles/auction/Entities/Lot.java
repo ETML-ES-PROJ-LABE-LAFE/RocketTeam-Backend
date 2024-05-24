@@ -1,28 +1,42 @@
 package ch.etmles.auction.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
 public class Lot {
-    private @Id
-    @GeneratedValue Long id;
+
+    private @Id @GeneratedValue Long id;
+
     private String description;
+
     @ManyToOne
     private Category category;
+
     private double initialPrice;
     private double highestBid;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
     public Lot() {}
 
-    public Lot(String description, Category category, double initialPrice, double highestBid) {
+    public Lot(String description, Category category, double initialPrice, double highestBid, Customer customer) {
         this.description = description;
         this.category = category;
         this.initialPrice = initialPrice;
         this.highestBid = highestBid;
+        this.customer = customer;
+    }
+
+    // Getter and Setter for user
+    public Customer getUser() {
+        return customer;
+    }
+
+    public void setUser(Customer user) {
+        this.customer = user;
     }
 
     //can't delete it. if deleted, create bug in the frontend
