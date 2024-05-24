@@ -15,14 +15,16 @@ public class Lot {
     private Category category;
     private double initialPrice;
     private double highestBid;
+    private boolean active = true; // Nouveau champ pour indiquer si le lot est actif
 
     public Lot() {}
 
-    public Lot(String description, Category category, double initialPrice, double highestBid) {
+    public Lot(String description, Category category, double initialPrice, double highestBid, boolean active) {
         this.description = description;
         this.category = category;
         this.initialPrice = initialPrice;
         this.highestBid = highestBid;
+        this.active = active;
     }
 
     //can't delete it. if deleted, create bug in the frontend
@@ -65,7 +67,13 @@ public class Lot {
     public void setHighestBid(double highestBid) {
         this.highestBid = highestBid;
     }
+    public boolean isActive() {
+        return active;
+    }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

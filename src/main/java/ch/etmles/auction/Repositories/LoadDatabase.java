@@ -24,10 +24,11 @@ public class LoadDatabase {
             Category subCategory3 = categoryRepository.save(new Category("Chambre", mainCategory2));
 
             // Création et sauvegarde des lots avec leurs sous-catégories
-            Lot lot1 = lotRepository.save(new Lot("Pull Gucci", subCategory1, 100.0, 150.0));
-            Lot lot2 = lotRepository.save(new Lot("T-Shirt Ralph Lauren", subCategory1, 200.0, 250.0));
-            Lot lot3 = lotRepository.save(new Lot("Pantalon Jack&Jones", subCategory2, 300.0, 350.0));
-            Lot lot4 = lotRepository.save(new Lot("Lit Cars", subCategory3, 400.0, 450.0));
+            Lot lot1 = lotRepository.save(new Lot("Pull Gucci", subCategory1, 100.0, 150.0, true));
+            Lot lot2 = lotRepository.save(new Lot("T-Shirt Ralph Lauren", subCategory1, 200.0, 250.0, true));
+            Lot lot3 = lotRepository.save(new Lot("Pantalon Jack&Jones", subCategory2, 300.0, 350.0, true));
+            Lot lot4 = lotRepository.save(new Lot("Lit Cars", subCategory3, 400.0, 450.0, true));
+
 
             // Vous pouvez ajouter plus de catégories, sous-catégories et lots ici
         };

@@ -25,13 +25,18 @@ public class LotController {
 
     @PostMapping
     public Lot addLot(@RequestBody Lot lot) {
+        // Validate inputs
+        if (lot.getDescription() == null || lot.getDescription().isEmpty() ||
+                lot.getCategory() == null || lot.getInitialPrice() <= 0) {
+            throw new LotException.InvalidLotException("Invalid lot details");
+        }
         return lotRepository.save(lot);
     }
 
     @GetMapping("/{id}")
     public Lot getLotById(@PathVariable Long id) {
         return lotRepository.findById(id)
-                .orElseThrow(() -> new LotNotFoundException(id));
+                .orElseThrow(() -> new LotException.LotNotFoundException(id));
     }
 
     @PutMapping("/{id}")
@@ -58,6 +63,17 @@ public class LotController {
 
     @DeleteMapping("/{id}")
     public void deleteLot(@PathVariable Long id) {
+        lotRepository.findById(id)
+                .orElseThrow(() -> new LotException.LotNotFoundException(id));
         lotRepository.deleteById(id);
+    }
+    @PutMapping("/{id}/endAuction")
+    public Lot endAuction(@PathVariable Long id) {
+        return lotRepository.findById(id)
+                .map(lot -> {
+                    lot.setActive(false); // Marque le lot comme inactif
+                    return lotRepository.save(lot);
+                })
+                .orElseThrow(() -> new LotException.LotNotFoundException(id));
     }
 }
