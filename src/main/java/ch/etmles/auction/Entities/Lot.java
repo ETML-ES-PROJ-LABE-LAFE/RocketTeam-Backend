@@ -21,7 +21,6 @@ public class Lot {
     private boolean active = true; // Nouveau champ pour indiquer si le lot est actif
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     public Lot() {}

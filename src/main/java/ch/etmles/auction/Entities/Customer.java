@@ -1,20 +1,22 @@
 package ch.etmles.auction.Entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 public class Customer {
 
-
     private @Id @GeneratedValue Long id;
-
     private String customername;
     private String email;
 
     @OneToMany(mappedBy = "customer")
-    private Set<Lot> lots;
+    private Set<Lot> lots = new HashSet<>();
 
     public Customer() {}
 
@@ -22,6 +24,8 @@ public class Customer {
         this.customername = customername;
         this.email = email;
     }
+
+    // getters and setters
 
     public Long getId() {
         return id;
@@ -31,11 +35,11 @@ public class Customer {
         this.id = id;
     }
 
-    public String getCustomername() {
+    public String getName() {
         return customername;
     }
 
-    public void setCustomername(String customername) {
+    public void setName(String customername) {
         this.customername = customername;
     }
 

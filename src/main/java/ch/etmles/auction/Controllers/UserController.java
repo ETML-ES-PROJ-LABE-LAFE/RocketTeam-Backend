@@ -38,7 +38,7 @@ public class UserController {
     public Customer updateUser(@RequestBody Customer newUser, @PathVariable Long id) {
         return customerRepository.findById(id)
                 .map(user -> {
-                    user.setCustomername(newUser.getCustomername());
+                    user.setName(newUser.getName());
                     user.setEmail(newUser.getEmail());
                     return customerRepository.save(user);
                 })

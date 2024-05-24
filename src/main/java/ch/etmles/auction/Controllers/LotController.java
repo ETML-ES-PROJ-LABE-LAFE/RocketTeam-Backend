@@ -78,7 +78,7 @@ public class LotController {
             } else {
                 throw new IllegalArgumentException("Bid amount must be higher than current highest bid");
             }
-        }).orElseThrow(() -> new LotNotFoundException(id));
+        }).orElseThrow(() -> new LotException.LotNotFoundException(id));
     }
 
 
