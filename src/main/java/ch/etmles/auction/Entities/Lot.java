@@ -1,5 +1,6 @@
 package ch.etmles.auction.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -21,7 +22,7 @@ public class Lot {
     private boolean active = true; // Nouveau champ pour indiquer si le lot est actif
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JsonManagedReference
     private Customer customer;
 
     public Lot() {}

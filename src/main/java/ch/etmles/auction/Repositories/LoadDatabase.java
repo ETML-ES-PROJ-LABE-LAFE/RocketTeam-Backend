@@ -34,9 +34,8 @@ public class LoadDatabase {
             Lot lot1 = lotRepository.save(new Lot("Pull Gucci", subCategory1, 100.0, 150.0, true, Identify1));
             Lot lot2 = lotRepository.save(new Lot("T-Shirt Ralph Lauren", subCategory1, 200.0, 250.0, true, Identify2));
             Lot lot3 = lotRepository.save(new Lot("Pantalon Jack&Jones", subCategory2, 300.0, 350.0, true, Identify1));
-            Lot lot4 = lotRepository.save(new Lot("Lit Cars", subCategory3, 400.0, 450.0, true, Identify1));
+            Lot lot4 = lotRepository.save(new Lot("Lit Cars", subCategory3, 400.0, 450.0, true, Identify2));
 
-            // Vous pouvez ajouter plus de catégories, sous-catégories et lots ici
         };
     }
 }
