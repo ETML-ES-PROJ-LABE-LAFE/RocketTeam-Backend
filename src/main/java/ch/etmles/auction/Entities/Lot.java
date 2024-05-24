@@ -8,23 +8,40 @@ import java.util.Objects;
 
 @Entity
 public class Lot {
-    private @Id
-    @GeneratedValue Long id;
+
+    private @Id @GeneratedValue Long id;
+
     private String description;
+
     @ManyToOne
     private Category category;
+
     private double initialPrice;
     private double highestBid;
     private boolean active = true; // Nouveau champ pour indiquer si le lot est actif
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
     public Lot() {}
 
-    public Lot(String description, Category category, double initialPrice, double highestBid, boolean active) {
+    public Lot(String description, Category category, double initialPrice, double highestBid, boolean active, Customer customer) {
         this.description = description;
         this.category = category;
         this.initialPrice = initialPrice;
         this.highestBid = highestBid;
         this.active = active;
+        this.customer = customer;
+    }
+
+    // Getter and Setter for user
+    public Customer getUser() {
+        return customer;
+    }
+
+    public void setUser(Customer user) {
+        this.customer = user;
     }
 
     //can't delete it. if deleted, create bug in the frontend

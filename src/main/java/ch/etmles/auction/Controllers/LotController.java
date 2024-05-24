@@ -67,6 +67,30 @@ public class LotController {
                 .orElseThrow(() -> new LotException.LotNotFoundException(id));
         lotRepository.deleteById(id);
     }
+
+
+    @PutMapping("/{id}/placeBid")
+    public Lot placeBid(@PathVariable("id") Long id, @RequestParam("bidAmount") double bidAmount) {
+        return lotRepository.findById(id).map(lot -> {
+            if (bidAmount > lot.getHighestBid()) {
+                lot.setHighestBid(bidAmount);
+                return lotRepository.save(lot);
+            } else {
+                throw new IllegalArgumentException("Bid amount must be higher than current highest bid");
+            }
+        }).orElseThrow(() -> new LotNotFoundException(id));
+    }
+
+
+    @DeleteMapping("/{id}/remove")
+    public void removeLot(@PathVariable Long id) {
+        lotRepository.deleteById(id);
+    }
+
+    @GetMapping("/customer/{customerId}")
+    public List<Lot> getLotsByUser(@PathVariable Long customerId) {
+        return lotRepository.findByCustomer_Id(customerId);
+    }
     @PutMapping("/{id}/endAuction")
     public Lot endAuction(@PathVariable Long id) {
         return lotRepository.findById(id)
