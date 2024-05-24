@@ -1,5 +1,6 @@
 package ch.etmles.auction.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -16,6 +17,7 @@ public class Customer {
     private String email;
 
     @OneToMany(mappedBy = "customer")
+    @JsonBackReference
     private Set<Lot> lots = new HashSet<>();
 
     public Customer() {}

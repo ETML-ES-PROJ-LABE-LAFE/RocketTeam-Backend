@@ -23,12 +23,21 @@ public class LotController {
         return lotRepository.findAll();
     }
 
+    @GetMapping("/customer/{customerId}")
+    public List<Lot> getLotsByCustomer(@PathVariable Long customerId) {
+        return lotRepository.findByCustomer_Id(customerId);
+    }
+    @GetMapping("/categories/{subcategoryId}/lots")
+    public List<Lot> getLotsBySubcategory(@PathVariable Long subcategoryId) {
+        return lotRepository.findByCategory_Id(subcategoryId);
+    }
+
     @PostMapping
     public Lot addLot(@RequestBody Lot lot) {
         // Validate inputs
         if (lot.getDescription() == null || lot.getDescription().isEmpty() ||
                 lot.getCategory() == null || lot.getInitialPrice() <= 0) {
-            throw new LotException.InvalidLotException("Invalid lot details");
+            throw new IllegalArgumentException("Invalid lot details");
         }
         return lotRepository.save(lot);
     }
@@ -36,7 +45,7 @@ public class LotController {
     @GetMapping("/{id}")
     public Lot getLotById(@PathVariable Long id) {
         return lotRepository.findById(id)
-                .orElseThrow(() -> new LotException.LotNotFoundException(id));
+                .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
     }
 
     @PutMapping("/{id}")
@@ -55,49 +64,20 @@ public class LotController {
                 });
     }
 
-    // Endpoint pour récupérer les lots par sous-catégorie
-    @GetMapping("/categories/{subcategoryId}/lots")
-    public List<Lot> getLotsBySubcategory(@PathVariable Long subcategoryId) {
-        return lotRepository.findByCategory_Id(subcategoryId);
-    }
-
     @DeleteMapping("/{id}")
     public void deleteLot(@PathVariable Long id) {
         lotRepository.findById(id)
-                .orElseThrow(() -> new LotException.LotNotFoundException(id));
+                .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
         lotRepository.deleteById(id);
     }
 
-
-    @PutMapping("/{id}/placeBid")
-    public Lot placeBid(@PathVariable("id") Long id, @RequestParam("bidAmount") double bidAmount) {
-        return lotRepository.findById(id).map(lot -> {
-            if (bidAmount > lot.getHighestBid()) {
-                lot.setHighestBid(bidAmount);
-                return lotRepository.save(lot);
-            } else {
-                throw new IllegalArgumentException("Bid amount must be higher than current highest bid");
-            }
-        }).orElseThrow(() -> new LotException.LotNotFoundException(id));
-    }
-
-
-    @DeleteMapping("/{id}/remove")
-    public void removeLot(@PathVariable Long id) {
-        lotRepository.deleteById(id);
-    }
-
-    @GetMapping("/customer/{customerId}")
-    public List<Lot> getLotsByUser(@PathVariable Long customerId) {
-        return lotRepository.findByCustomer_Id(customerId);
-    }
     @PutMapping("/{id}/endAuction")
     public Lot endAuction(@PathVariable Long id) {
         return lotRepository.findById(id)
                 .map(lot -> {
-                    lot.setActive(false); // Marque le lot comme inactif
+                    lot.setActive(false); // Mark the lot as inactive
                     return lotRepository.save(lot);
                 })
-                .orElseThrow(() -> new LotException.LotNotFoundException(id));
+                .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
     }
 }
