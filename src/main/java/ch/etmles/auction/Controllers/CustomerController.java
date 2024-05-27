@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/customers")
+public class CustomerController {
 
     private final CustomerRepository customerRepository;
 
     @Autowired
-    public UserController(CustomerRepository customerRepository) {
+    public CustomerController(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
