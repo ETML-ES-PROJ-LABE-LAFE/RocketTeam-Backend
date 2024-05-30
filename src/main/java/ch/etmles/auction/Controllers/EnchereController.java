@@ -4,7 +4,6 @@ import ch.etmles.auction.Entities.Enchere;
 import ch.etmles.auction.Entities.Lot;
 import ch.etmles.auction.Repositories.EnchereRepository;
 import ch.etmles.auction.Repositories.LotRepository;
-import ch.etmles.auction.config.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
