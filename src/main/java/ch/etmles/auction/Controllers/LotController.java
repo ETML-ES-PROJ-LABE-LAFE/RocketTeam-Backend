@@ -2,8 +2,8 @@ package ch.etmles.auction.Controllers;
 
 import ch.etmles.auction.Entities.Lot;
 import ch.etmles.auction.Repositories.LotRepository;
+import ch.etmles.auction.config.IdUtil; // Import de la classe IdUtil
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +28,7 @@ public class LotController {
     public List<Lot> getLotsByCustomer(@PathVariable Long customerId) {
         return lotRepository.findByCustomer_Id(customerId);
     }
+
     @GetMapping("/categories/{subcategoryId}/lots")
     public List<Lot> getLotsBySubcategory(@PathVariable Long subcategoryId) {
         return lotRepository.findByCategory_Id(subcategoryId);
@@ -42,16 +43,16 @@ public class LotController {
         return lotRepository.save(lot);
     }
 
-
-
-    @GetMapping("/{id}")
-    public Lot getLotById(@PathVariable Long id) {
+    @GetMapping("/{encodedId}")
+    public Lot getLotById(@PathVariable String encodedId) {
+        Long id = IdUtil.decodeId(encodedId);
         return lotRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
     }
 
-    @PutMapping("/{id}")
-    public Lot updateLot(@RequestBody Lot newLot, @PathVariable Long id) {
+    @PutMapping("/{encodedId}")
+    public Lot updateLot(@RequestBody Lot newLot, @PathVariable String encodedId) {
+        Long id = IdUtil.decodeId(encodedId);
         return lotRepository.findById(id)
                 .map(lot -> {
                     lot.setDescription(newLot.getDescription());
@@ -66,15 +67,17 @@ public class LotController {
                 });
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteLot(@PathVariable Long id) {
+    @DeleteMapping("/{encodedId}")
+    public void deleteLot(@PathVariable String encodedId) {
+        Long id = IdUtil.decodeId(encodedId);
         lotRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
         lotRepository.deleteById(id);
     }
 
-    @PutMapping("/{id}/endAuction")
-    public Lot endAuction(@PathVariable Long id) {
+    @PutMapping("/{encodedId}/endAuction")
+    public Lot endAuction(@PathVariable String encodedId) {
+        Long id = IdUtil.decodeId(encodedId);
         return lotRepository.findById(id)
                 .map(lot -> {
                     lot.setActive(false); // Mark the lot as inactive
