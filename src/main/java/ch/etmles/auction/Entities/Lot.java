@@ -5,21 +5,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+
 import java.util.Objects;
 
 @Entity
 public class Lot {
 
     private @Id @GeneratedValue Long id;
-
     private String description;
+    private String image; // Ajout du champ image
 
     @ManyToOne
     private Category category;
 
     private double initialPrice;
     private double highestBid;
-    private boolean active = true; // Nouveau champ pour indiquer si le lot est actif
+    private boolean active = true;
 
     @ManyToOne
     @JsonManagedReference
@@ -27,8 +28,9 @@ public class Lot {
 
     public Lot() {}
 
-    public Lot(String description, Category category, double initialPrice, double highestBid, boolean active, Customer customer) {
+    public Lot(String description, String image, Category category, double initialPrice, double highestBid, boolean active, Customer customer) {
         this.description = description;
+        this.image = image;
         this.category = category;
         this.initialPrice = initialPrice;
         this.highestBid = highestBid;
@@ -36,16 +38,7 @@ public class Lot {
         this.customer = customer;
     }
 
-    // Getter and Setter for user
-    public Customer getUser() {
-        return customer;
-    }
-
-    public void setUser(Customer user) {
-        this.customer = user;
-    }
-
-    //can't delete it. if deleted, create bug in the frontend
+    // Getters and setters for all fields
     public Long getId() {
         return id;
     }
@@ -60,6 +53,14 @@ public class Lot {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Category getCategory() {
@@ -85,6 +86,7 @@ public class Lot {
     public void setHighestBid(double highestBid) {
         this.highestBid = highestBid;
     }
+
     public boolean isActive() {
         return active;
     }
@@ -92,6 +94,15 @@ public class Lot {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,9 +123,12 @@ public class Lot {
         return "Lot{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", category='" + category + '\'' +
+                ", image='" + image + '\'' +
+                ", category=" + category +
                 ", initialPrice=" + initialPrice +
                 ", highestBid=" + highestBid +
+                ", active=" + active +
+                ", customer=" + customer +
                 '}';
     }
 }
