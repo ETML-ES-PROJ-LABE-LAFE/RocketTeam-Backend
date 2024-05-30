@@ -3,6 +3,7 @@ package ch.etmles.auction.Controllers;
 import ch.etmles.auction.Entities.Lot;
 import ch.etmles.auction.Repositories.LotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,15 +33,16 @@ public class LotController {
         return lotRepository.findByCategory_Id(subcategoryId);
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json", produces = "application/json")
     public Lot addLot(@RequestBody Lot lot) {
-        // Validate inputs
         if (lot.getDescription() == null || lot.getDescription().isEmpty() ||
                 lot.getCategory() == null || lot.getInitialPrice() <= 0) {
             throw new IllegalArgumentException("Invalid lot details");
         }
         return lotRepository.save(lot);
     }
+
+
 
     @GetMapping("/{id}")
     public Lot getLotById(@PathVariable Long id) {

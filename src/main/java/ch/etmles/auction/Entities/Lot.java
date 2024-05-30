@@ -1,6 +1,7 @@
 package ch.etmles.auction.Entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,6 +9,14 @@ import jakarta.persistence.ManyToOne;
 import java.util.Objects;
 
 @Entity
+// Cette annotation est utilisée pour gérer les références circulaires lors de la sérialisation JSON.
+// Elle indique à Jackson d'utiliser l'identifiant (ici, le champ "id") pour gérer les références.
+// Lorsque Jackson sérialise cet objet, il utilise la valeur du champ "id" pour représenter l'objet.
+// Cela permet d'éviter les boucles infinies lors de la sérialisation/desérialisation, en particulier pour les relations bidirectionnelles.
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Lot {
 
     private @Id @GeneratedValue Long id;
@@ -19,10 +28,9 @@ public class Lot {
 
     private double initialPrice;
     private double highestBid;
-    private boolean active = true; // Nouveau champ pour indiquer si le lot est actif
+    private boolean active = true;
 
     @ManyToOne
-    @JsonManagedReference
     private Customer customer;
 
     public Lot() {}
@@ -36,16 +44,8 @@ public class Lot {
         this.customer = customer;
     }
 
-    // Getter and Setter for user
-    public Customer getUser() {
-        return customer;
-    }
+    // getters and setters
 
-    public void setUser(Customer user) {
-        this.customer = user;
-    }
-
-    //can't delete it. if deleted, create bug in the frontend
     public Long getId() {
         return id;
     }
@@ -85,6 +85,7 @@ public class Lot {
     public void setHighestBid(double highestBid) {
         this.highestBid = highestBid;
     }
+
     public boolean isActive() {
         return active;
     }
@@ -92,6 +93,15 @@ public class Lot {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
