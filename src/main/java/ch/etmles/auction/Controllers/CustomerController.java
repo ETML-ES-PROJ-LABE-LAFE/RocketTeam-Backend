@@ -33,23 +33,4 @@ public class CustomerController {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
-
-    @PutMapping("/{id}")
-    public Customer updateUser(@RequestBody Customer newUser, @PathVariable Long id) {
-        return customerRepository.findById(id)
-                .map(user -> {
-                    user.setName(newUser.getName());
-                    user.setEmail(newUser.getEmail());
-                    return customerRepository.save(user);
-                })
-                .orElseGet(() -> {
-                    newUser.setId(id);
-                    return customerRepository.save(newUser);
-                });
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        customerRepository.deleteById(id);
-    }
 }

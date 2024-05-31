@@ -85,16 +85,4 @@ public class LotController {
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
     }
-
-    @PutMapping("/{encodedId}/setActive")
-    public Lot setLotActive(@PathVariable String encodedId, @RequestParam boolean active) {
-        Long id = IdUtil.decodeId(encodedId);
-        return lotRepository.findById(id)
-                .map(lot -> {
-                    lot.setActive(active);
-                    return lotRepository.save(lot);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
-    }
-
 }

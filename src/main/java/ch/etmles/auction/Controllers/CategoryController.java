@@ -34,17 +34,4 @@ public class CategoryController {
                 .orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
-    @PutMapping("/{id}")
-    public Category updateCategory(@RequestBody Category newCategory, @PathVariable Long id) {
-        return repository.findById(id)
-                .map(category -> {
-                    category.setName(newCategory.getName());
-                    category.setParentCategory(newCategory.getParentCategory());
-                    return repository.save(category);
-                })
-                .orElseGet(() -> {
-                    newCategory.setId(id);
-                    return repository.save(newCategory);
-                });
-    }
 }
