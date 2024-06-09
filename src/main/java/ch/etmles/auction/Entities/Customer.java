@@ -16,7 +16,7 @@ import java.util.Set;
 public class Customer {
 
     private @Id @GeneratedValue Long id;
-    private String customername;
+    private String customerName;
     private String email;
 
     @OneToMany(mappedBy = "customer")
@@ -25,8 +25,9 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(String customername, String email) {
-        this.customername = customername;
+    //TODO Naming convention
+    public Customer(String customerName, String email) {
+        this.customerName = customerName;
         this.email = email;
     }
 
@@ -41,11 +42,11 @@ public class Customer {
     }
 
     public String getName() {
-        return customername;
+        return customerName;
     }
 
     public void setName(String customername) {
-        this.customername = customername;
+        this.customerName = customerName;
     }
 
     public String getEmail() {
@@ -81,7 +82,7 @@ public class Customer {
     public String toString() {
         return "Customer{" +
                 "id=" + id +
-                ", customername='" + customername + '\'' +
+                ", customerName='" + customerName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

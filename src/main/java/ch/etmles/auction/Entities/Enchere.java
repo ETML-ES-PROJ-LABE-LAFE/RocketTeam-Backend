@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+//TODO Class name in English !
 public class Enchere {
     private @Id @GeneratedValue Long id;
     private double amount;
