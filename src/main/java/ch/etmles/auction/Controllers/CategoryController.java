@@ -26,6 +26,7 @@ public class CategoryController {
     @PostMapping
     public Category addCategory(@RequestBody Category category) {
         return repository.save(category);
+        //TODO if the category already exists... (unique constraint)
     }
 
     @GetMapping("/{id}")

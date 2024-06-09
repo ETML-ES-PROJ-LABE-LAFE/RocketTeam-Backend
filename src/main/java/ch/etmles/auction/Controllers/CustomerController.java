@@ -26,6 +26,7 @@ public class CustomerController {
     @PostMapping
     public Customer addUser(@RequestBody Customer user) {
         return customerRepository.save(user);
+        //TODO if the user already exists... (unique constraint)
     }
 
     @GetMapping("/{id}")

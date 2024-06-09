@@ -23,6 +23,7 @@ public class Category {
     }
 
     //can't delete it. if deleted, create bug in the frontend
+    //TODO this kind of comment must be removed from delivery (stay on feature/branch -> or create an issue)
     public Long getId() {
         return id;
     }
