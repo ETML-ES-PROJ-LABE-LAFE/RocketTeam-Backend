@@ -1,22 +1,27 @@
 package ch.etmles.auction.Controllers;
 
 import ch.etmles.auction.Entities.Lot;
+import ch.etmles.auction.Entities.Enchere;
 import ch.etmles.auction.Repositories.LotRepository;
-import ch.etmles.auction.config.IdUtil; // Import de la classe IdUtil
+import ch.etmles.auction.Repositories.EnchereRepository;
+import ch.etmles.auction.config.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/lots")
 public class LotController {
 
     private final LotRepository lotRepository;
+    private final EnchereRepository enchereRepository;
 
     @Autowired
-    public LotController(LotRepository lotRepository) {
+    public LotController(LotRepository lotRepository, EnchereRepository enchereRepository) {
         this.lotRepository = lotRepository;
+        this.enchereRepository = enchereRepository;
     }
 
     @GetMapping
@@ -80,9 +85,23 @@ public class LotController {
         Long id = IdUtil.decodeId(encodedId);
         return lotRepository.findById(id)
                 .map(lot -> {
+                    // Fetch the highest bid for the lot
+                    Optional<Enchere> highestBid = enchereRepository.findTopByLotIdOrderByAmountDesc(id);
+
+                    if (highestBid.isPresent()) {
+                        // Set the highest bidder if there was a bid
+                        lot.setHighestBidder(highestBid.get().getCustomer());
+                    }
+
                     lot.setActive(false); // Mark the lot as inactive
                     return lotRepository.save(lot);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
     }
+
+    @GetMapping("/pending")
+    public List<Lot> getPendingLots() {
+        return lotRepository.findByActiveFalseAndHighestBidderIsNotNull();
+    }
+
 }
