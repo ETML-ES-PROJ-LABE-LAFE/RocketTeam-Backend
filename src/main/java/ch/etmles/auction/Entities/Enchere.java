@@ -4,24 +4,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 public class Enchere {
     private @Id @GeneratedValue Long id;
-    private double amount;
+    private BigDecimal amount;
     private LocalDateTime timestamp;
 
     @ManyToOne
     private Lot lot;
 
+    @ManyToOne
+    private Customer customer;
+
     public Enchere() {}
 
-    public Enchere(double amount, LocalDateTime timestamp, Lot lot) {
+    public Enchere(BigDecimal amount, LocalDateTime timestamp, Lot lot, Customer customer) {
         this.amount = amount;
         this.timestamp = timestamp;
         this.lot = lot;
+        this.customer = customer;
     }
 
     public Long getId() {
@@ -32,11 +37,11 @@ public class Enchere {
         this.id = id;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -56,17 +61,29 @@ public class Enchere {
         this.lot = lot;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Enchere)) return false;
         Enchere enchere = (Enchere) o;
-        return Double.compare(enchere.amount, amount) == 0 && Objects.equals(id, enchere.id) && Objects.equals(timestamp, enchere.timestamp) && Objects.equals(lot, enchere.lot);
+        return Objects.equals(id, enchere.id) &&
+                Objects.equals(amount, enchere.amount) &&
+                Objects.equals(timestamp, enchere.timestamp) &&
+                Objects.equals(lot, enchere.lot) &&
+                Objects.equals(customer, enchere.customer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, amount, timestamp, lot);
+        return Objects.hash(id, amount, timestamp, lot, customer);
     }
 
     @Override
@@ -76,6 +93,7 @@ public class Enchere {
                 ", amount=" + amount +
                 ", timestamp=" + timestamp +
                 ", lot=" + lot +
+                ", customer=" + customer +
                 '}';
     }
 }

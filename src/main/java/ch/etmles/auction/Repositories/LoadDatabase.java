@@ -9,6 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.math.BigDecimal;
+
 @Configuration
 public class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
@@ -18,8 +20,9 @@ public class LoadDatabase {
         return args -> {
             //Création des users
             /*User Admin = userRepository.save(new User("Cpte_Admin", "admin@etml-es.ch"));*/
-            Customer Identify1 = customerRepository.save(new Customer("Cpte_Identifie", "identifie@etml-es.ch"));
-            Customer Identify2 = customerRepository.save(new Customer("Cpte_Identifie2", "identifie@etml-es.ch"));
+            Customer Identify1 = customerRepository.save(new Customer("Cpte_Identifie", "identifie@etml-es.ch", new BigDecimal("1000.0")));
+            Customer Identify2 = customerRepository.save(new Customer("Cpte_Identifie2", "identifie2@etml-es.ch", new BigDecimal("800.0")));
+
             /*User NoIdentify = userRepository.save(new User("Cpte_NonIdentifié", "nonidentifie@etml-es.ch"));*/
 
             // Création et sauvegarde des catégories

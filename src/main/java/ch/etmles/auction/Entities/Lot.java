@@ -1,39 +1,34 @@
 package ch.etmles.auction.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import java.util.Objects;
+
+import java.math.BigDecimal;
+import java.util.Objects; // Ajout de cette ligne pour importer la classe Objects
 
 @Entity
-// Cette annotation est utilisée pour gérer les références circulaires lors de la sérialisation JSON.
-// Elle indique à Jackson d'utiliser l'identifiant (ici, le champ "id") pour gérer les références.
-// Lorsque Jackson sérialise cet objet, il utilise la valeur du champ "id" pour représenter l'objet.
-// Cela permet d'éviter les boucles infinies lors de la sérialisation/desérialisation, en particulier pour les relations bidirectionnelles.
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Lot {
 
     private @Id @GeneratedValue Long id;
-
     private String description;
-    private String image; // Ajout du champ image
+    private String image;
+    private double initialPrice;
+    private BigDecimal highestBid;
+    private boolean active = true;
 
     @ManyToOne
     private Category category;
 
-    private double initialPrice;
-    private double highestBid;
-    private boolean active = true; // Nouveau champ pour indiquer si le lot est actif
-
     @ManyToOne
     private Customer customer;
+
+    @ManyToOne
+    private Customer highestBidder;
 
     public Lot() {}
 
@@ -42,21 +37,13 @@ public class Lot {
         this.image = image;
         this.category = category;
         this.initialPrice = initialPrice;
-        this.highestBid = highestBid;
+        this.highestBid = BigDecimal.valueOf(highestBid);
         this.active = active;
         this.customer = customer;
     }
 
-    // Getter and Setter for user
-    public Customer getUser() {
-        return customer;
-    }
+    // Getters and Setters
 
-    public void setUser(Customer user) {
-        this.customer = user;
-    }
-
-    //can't delete it. if deleted, create bug in the frontend
     public Long getId() {
         return id;
     }
@@ -81,14 +68,6 @@ public class Lot {
         this.image = image;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public double getInitialPrice() {
         return initialPrice;
     }
@@ -97,13 +76,14 @@ public class Lot {
         this.initialPrice = initialPrice;
     }
 
-    public double getHighestBid() {
+    public BigDecimal getHighestBid() {
         return highestBid;
     }
 
-    public void setHighestBid(double highestBid) {
+    public void setHighestBid(BigDecimal highestBid) {
         this.highestBid = highestBid;
     }
+
     public boolean isActive() {
         return active;
     }
@@ -112,12 +92,28 @@ public class Lot {
         this.active = active;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public Customer getCustomer() {
         return customer;
     }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Customer getHighestBidder() {
+        return highestBidder;
+    }
+
+    public void setHighestBidder(Customer highestBidder) {
+        this.highestBidder = highestBidder;
     }
 
     @Override
@@ -146,6 +142,7 @@ public class Lot {
                 ", highestBid=" + highestBid +
                 ", active=" + active +
                 ", customer=" + customer +
+                ", highestBidder=" + highestBidder +
                 '}';
     }
 }

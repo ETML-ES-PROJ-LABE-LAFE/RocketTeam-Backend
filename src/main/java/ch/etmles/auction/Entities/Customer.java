@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,6 +20,8 @@ public class Customer {
     private @Id @GeneratedValue Long id;
     private String customername;
     private String email;
+    private BigDecimal balance;
+    private BigDecimal reservedBalance;
 
     @OneToMany(mappedBy = "customer")
     @JsonBackReference
@@ -25,9 +29,11 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(String customername, String email) {
+    public Customer(String customername, String email, BigDecimal balance) {
         this.customername = customername;
         this.email = email;
+        this.balance = balance;
+        this.reservedBalance = BigDecimal.ZERO;
     }
 
     // getters and setters
@@ -54,6 +60,22 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public BigDecimal getReservedBalance() {
+        return reservedBalance;
+    }
+
+    public void setReservedBalance(BigDecimal reservedBalance) {
+        this.reservedBalance = reservedBalance;
     }
 
     public Set<Lot> getLots() {
@@ -83,6 +105,8 @@ public class Customer {
                 "id=" + id +
                 ", customername='" + customername + '\'' +
                 ", email='" + email + '\'' +
+                ", balance=" + balance +
+                ", reservedBalance=" + reservedBalance +
                 '}';
     }
 }
