@@ -8,8 +8,11 @@ import java.util.List;
 
 @Repository
 public interface LotRepository extends JpaRepository<Lot, Long> {
-    // Déclaration de la méthode findBySubcategoryId
     List<Lot> findByCategory_Id(Long categoryId);
     List<Lot> findByCustomer_Id(Long customerId);
-    List<Lot> findByActiveFalseAndHighestBidderIsNotNull(); // Nouvelle méthode
+    List<Lot> findByStatusAndHighestBidderIsNotNull(String status);
+    List<Lot> findByStatusAndCustomer_Id(String status, Long customerId);
+
+    List<Lot> findByHighestBidder_Id(Long customerId);
 }
+

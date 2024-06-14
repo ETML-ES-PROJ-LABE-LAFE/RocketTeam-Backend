@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping("/lots")
 public class LotController {
@@ -91,9 +92,13 @@ public class LotController {
                     if (highestBid.isPresent()) {
                         // Set the highest bidder if there was a bid
                         lot.setHighestBidder(highestBid.get().getCustomer());
+                        lot.setStatus("AWAITING_PAYMENT"); // Set status to awaiting payment
+                    } else {
+                        // No bids, mark as inactive
+                        lot.setStatus("INACTIVE"); // Set status to inactive
+                        lot.setHighestBidder(null);
                     }
 
-                    lot.setActive(false); // Mark the lot as inactive
                     return lotRepository.save(lot);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
@@ -101,7 +106,11 @@ public class LotController {
 
     @GetMapping("/pending")
     public List<Lot> getPendingLots() {
-        return lotRepository.findByActiveFalseAndHighestBidderIsNotNull();
+        return lotRepository.findByStatusAndHighestBidderIsNotNull("AWAITING_PAYMENT");
     }
 
+    @GetMapping("/bid/{customerId}")
+    public List<Lot> getLotsBidByCustomer(@PathVariable Long customerId) {
+        return lotRepository.findByHighestBidder_Id(customerId);
+    }
 }

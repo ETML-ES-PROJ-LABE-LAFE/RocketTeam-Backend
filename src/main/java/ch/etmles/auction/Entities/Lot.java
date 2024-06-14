@@ -19,7 +19,7 @@ public class Lot {
     private String image;
     private double initialPrice;
     private BigDecimal highestBid;
-    private boolean active = true;
+    private String status; // New field for status
 
     @ManyToOne
     private Category category;
@@ -32,13 +32,13 @@ public class Lot {
 
     public Lot() {}
 
-    public Lot(String description, String image, Category category, double initialPrice, double highestBid, boolean active, Customer customer) {
+    public Lot(String description, String image, Category category, double initialPrice, double highestBid, String status, Customer customer) {
         this.description = description;
         this.image = image;
         this.category = category;
         this.initialPrice = initialPrice;
         this.highestBid = BigDecimal.valueOf(highestBid);
-        this.active = active;
+        this.status = status; // Initialize new field
         this.customer = customer;
     }
 
@@ -84,12 +84,12 @@ public class Lot {
         this.highestBid = highestBid;
     }
 
-    public boolean isActive() {
-        return active;
+    public String getStatus() {
+        return status;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Category getCategory() {
@@ -140,7 +140,7 @@ public class Lot {
                 ", category=" + category +
                 ", initialPrice=" + initialPrice +
                 ", highestBid=" + highestBid +
-                ", active=" + active +
+                ", status='" + status + '\'' +
                 ", customer=" + customer +
                 ", highestBidder=" + highestBidder +
                 '}';
