@@ -26,9 +26,10 @@ public class LoadDatabase {
         return args -> {
             //Création des users
             /*User Admin = userRepository.save(new User("Cpte_Admin", "admin@etml-es.ch"));*/
-            Customer Identify1 = customerRepository.save(new Customer("Nicolas", "nicolas@etml-es.ch", new BigDecimal("1000.0")));
-            Customer Identify2 = customerRepository.save(new Customer("Evan", "evan@etml-es.ch", new BigDecimal("800.0")));
-            Customer Identify3 = customerRepository.save(new Customer("Bruno", "bruno@etml-es.ch", new BigDecimal("3000.0")));
+            Customer Identify1 = customerRepository.save(new Customer("Nicolas", "nicolas@etml-es.ch", new BigDecimal("100000.0")));
+            Customer Identify2 = customerRepository.save(new Customer("Evan", "evan@etml-es.ch", new BigDecimal("150000.0")));
+            Customer Identify3 = customerRepository.save(new Customer("Bruno", "bruno@etml-es.ch", new BigDecimal("200000.0")));
+            Customer Identify4 = customerRepository.save(new Customer("Dylan", "dylan@etml-es.ch", new BigDecimal("5000.0")));
 
             // Création et sauvegarde des catégories
             Category mainCategory1 = categoryRepository.save(new Category("Vêtements", null));
