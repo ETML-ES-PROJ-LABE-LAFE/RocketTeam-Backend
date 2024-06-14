@@ -3,6 +3,7 @@ package ch.etmles.auction.Controllers;
 import ch.etmles.auction.Entities.Customer;
 import ch.etmles.auction.Entities.Enchere;
 import ch.etmles.auction.Entities.Lot;
+import ch.etmles.auction.Services.NotificationService;
 import ch.etmles.auction.Repositories.EnchereRepository;
 import ch.etmles.auction.Repositories.LotRepository;
 import ch.etmles.auction.Repositories.CustomerRepository;
@@ -20,12 +21,14 @@ public class EnchereController {
     private final EnchereRepository enchereRepository;
     private final LotRepository lotRepository;
     private final CustomerRepository customerRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    public EnchereController(EnchereRepository enchereRepository, LotRepository lotRepository, CustomerRepository customerRepository) {
+    public EnchereController(EnchereRepository enchereRepository, LotRepository lotRepository, CustomerRepository customerRepository, NotificationService notificationService) {
         this.enchereRepository = enchereRepository;
         this.lotRepository = lotRepository;
         this.customerRepository = customerRepository;
+        this.notificationService = notificationService;
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
@@ -43,13 +46,6 @@ public class EnchereController {
 
             BigDecimal availableBalance = customer.getBalance().subtract(totalBidAmount.add(customer.getReservedBalance()));
 
-            System.out.println("Bid Amount: " + enchere.getAmount());
-            System.out.println("Lot Highest Bid: " + lot.getHighestBid());
-            System.out.println("Customer Balance: " + customer.getBalance());
-            System.out.println("Total Bid Amount: " + totalBidAmount);
-            System.out.println("Reserved Balance: " + customer.getReservedBalance());
-            System.out.println("Available Balance: " + availableBalance);
-
             if (enchere.getAmount().compareTo(lot.getHighestBid()) <= 0) {
                 return ResponseEntity.badRequest().body(new EnchereErrorException("Votre offre doit être supérieure à l'offre la plus élevée."));
             } else if (totalBidAmount.add(enchere.getAmount()).compareTo(customer.getBalance()) > 0) {
@@ -59,6 +55,10 @@ public class EnchereController {
                     Customer previousHighestBidder = lot.getHighestBidder();
                     previousHighestBidder.setReservedBalance(previousHighestBidder.getReservedBalance().subtract(lot.getHighestBid()));
                     customerRepository.save(previousHighestBidder);
+
+                    // Add notification for the previous highest bidder
+                    String message = "Vous avez été surenchéri sur le lot: " + lot.getDescription();
+                    notificationService.addNotification(message, previousHighestBidder, lot, enchere.getAmount());
                 }
 
                 lot.setHighestBid(enchere.getAmount());
@@ -82,7 +82,6 @@ public class EnchereController {
                 .stream()
                 .map(Enchere::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        System.out.println("Total Bid Amount for customer " + customerId + ": " + totalBidAmount);
         return ResponseEntity.ok(totalBidAmount);
     }
 

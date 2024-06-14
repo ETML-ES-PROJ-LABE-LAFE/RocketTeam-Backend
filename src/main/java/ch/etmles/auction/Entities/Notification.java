@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -15,6 +16,7 @@ public class Notification {
     private String message;
     private boolean read = false;
     private LocalDateTime timestamp;
+    private BigDecimal bidAmount;
 
     @ManyToOne
     private Customer user;
@@ -24,10 +26,11 @@ public class Notification {
 
     public Notification() {}
 
-    public Notification(String message, Customer user, Lot lot) {
+    public Notification(String message, Customer user, Lot lot, BigDecimal bidAmount) {
         this.message = message;
         this.user = user;
         this.lot = lot;
+        this.bidAmount = bidAmount;
         this.timestamp = LocalDateTime.now();
         this.read = false;
     }
@@ -82,6 +85,14 @@ public class Notification {
         this.lot = lot;
     }
 
+    public BigDecimal getBidAmount() {
+        return bidAmount;
+    }
+
+    public void setBidAmount(BigDecimal bidAmount) {
+        this.bidAmount = bidAmount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,12 +101,13 @@ public class Notification {
         return id.equals(that.id) &&
                 Objects.equals(message, that.message) &&
                 Objects.equals(user, that.user) &&
-                Objects.equals(lot, that.lot);
+                Objects.equals(lot, that.lot) &&
+                Objects.equals(bidAmount, that.bidAmount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, message, user, lot);
+        return Objects.hash(id, message, user, lot, bidAmount);
     }
 
     @Override
@@ -107,6 +119,7 @@ public class Notification {
                 ", timestamp=" + timestamp +
                 ", user=" + user +
                 ", lot=" + lot +
+                ", bidAmount=" + bidAmount +
                 '}';
     }
 }
