@@ -41,12 +41,13 @@ public class EnchereController {
                     .map(Enchere::getAmount)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-            BigDecimal availableBalance = customer.getBalance().subtract(totalBidAmount);
+            BigDecimal availableBalance = customer.getBalance().subtract(totalBidAmount.add(customer.getReservedBalance()));
 
             System.out.println("Bid Amount: " + enchere.getAmount());
             System.out.println("Lot Highest Bid: " + lot.getHighestBid());
             System.out.println("Customer Balance: " + customer.getBalance());
             System.out.println("Total Bid Amount: " + totalBidAmount);
+            System.out.println("Reserved Balance: " + customer.getReservedBalance());
             System.out.println("Available Balance: " + availableBalance);
 
             if (enchere.getAmount().compareTo(lot.getHighestBid()) <= 0) {
@@ -54,20 +55,26 @@ public class EnchereController {
             } else if (totalBidAmount.add(enchere.getAmount()).compareTo(customer.getBalance()) > 0) {
                 return ResponseEntity.badRequest().body(new EnchereErrorException("Votre offre dépasse votre solde disponible."));
             } else {
+                if (lot.getHighestBidder() != null && !lot.getHighestBidder().getId().equals(customer.getId())) {
+                    Customer previousHighestBidder = lot.getHighestBidder();
+                    previousHighestBidder.setReservedBalance(previousHighestBidder.getReservedBalance().subtract(lot.getHighestBid()));
+                    customerRepository.save(previousHighestBidder);
+                }
+
                 lot.setHighestBid(enchere.getAmount());
-                lotRepository.save(lot); // Sauvegarde du lot mis à jour
+                lot.setHighestBidder(customer);
+                lotRepository.save(lot);
 
                 customer.setReservedBalance(customer.getReservedBalance().add(enchere.getAmount()));
-                customerRepository.save(customer); // Sauvegarde du solde réservé mis à jour
+                customerRepository.save(customer);
 
-                Enchere savedEnchere = enchereRepository.save(enchere); // Sauvegarde de l'enchère
+                Enchere savedEnchere = enchereRepository.save(enchere);
                 return ResponseEntity.ok(savedEnchere);
             }
         } else {
-            return ResponseEntity.notFound().build(); // Lot ou client non trouvé
+            return ResponseEntity.notFound().build();
         }
     }
-
 
     @GetMapping("/total/{customerId}")
     public ResponseEntity<BigDecimal> getTotalBidAmountByCustomer(@PathVariable Long customerId) {

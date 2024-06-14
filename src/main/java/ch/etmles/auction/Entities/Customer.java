@@ -14,7 +14,6 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Customer {
 
     private @Id @GeneratedValue Long id;

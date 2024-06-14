@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.util.Objects; // Ajout de cette ligne pour importer la classe Objects
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Lot {
 
     private @Id @GeneratedValue Long id;
