@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("/lots")
 public class LotController {
@@ -35,9 +34,14 @@ public class LotController {
         return lotRepository.findByCustomer_Id(customerId);
     }
 
-    @GetMapping("/categories/{subcategoryId}/lots")
-    public List<Lot> getLotsBySubcategory(@PathVariable Long subcategoryId) {
-        return lotRepository.findByCategory_Id(subcategoryId);
+    @GetMapping("/status/{status}")
+    public List<Lot> getLotsByStatus(@PathVariable String status) {
+        return lotRepository.findByStatus(status);
+    }
+
+    @GetMapping("/customer/{customerId}/status/{status}")
+    public List<Lot> getLotsByCustomerAndStatus(@PathVariable Long customerId, @PathVariable String status) {
+        return lotRepository.findByStatusAndCustomer_Id(status, customerId);
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
@@ -86,16 +90,13 @@ public class LotController {
         Long id = IdUtil.decodeId(encodedId);
         return lotRepository.findById(id)
                 .map(lot -> {
-                    // Fetch the highest bid for the lot
                     Optional<Enchere> highestBid = enchereRepository.findTopByLotIdOrderByAmountDesc(id);
 
                     if (highestBid.isPresent()) {
-                        // Set the highest bidder if there was a bid
                         lot.setHighestBidder(highestBid.get().getCustomer());
-                        lot.setStatus("AWAITING_PAYMENT"); // Set status to awaiting payment
+                        lot.setStatus("awaiting payment");
                     } else {
-                        // No bids, mark as inactive
-                        lot.setStatus("INACTIVE"); // Set status to inactive
+                        lot.setStatus("inactive");
                         lot.setHighestBidder(null);
                     }
 
@@ -104,10 +105,6 @@ public class LotController {
                 .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
     }
 
-    @GetMapping("/pending")
-    public List<Lot> getPendingLots() {
-        return lotRepository.findByStatusAndHighestBidderIsNotNull("AWAITING_PAYMENT");
-    }
 
     @GetMapping("/bid/{customerId}")
     public List<Lot> getLotsBidByCustomer(@PathVariable Long customerId) {

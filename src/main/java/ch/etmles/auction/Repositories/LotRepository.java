@@ -10,9 +10,7 @@ import java.util.List;
 public interface LotRepository extends JpaRepository<Lot, Long> {
     List<Lot> findByCategory_Id(Long categoryId);
     List<Lot> findByCustomer_Id(Long customerId);
-    List<Lot> findByStatusAndHighestBidderIsNotNull(String status);
+    List<Lot> findByStatus(String status);
     List<Lot> findByStatusAndCustomer_Id(String status, Long customerId);
-
     List<Lot> findByHighestBidder_Id(Long customerId);
 }
-
