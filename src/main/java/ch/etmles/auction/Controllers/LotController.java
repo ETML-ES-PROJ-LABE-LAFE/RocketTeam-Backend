@@ -2,7 +2,6 @@ package ch.etmles.auction.Controllers;
 
 import ch.etmles.auction.Entities.Lot;
 import ch.etmles.auction.Entities.Enchere;
-import ch.etmles.auction.Entities.Notification;
 import ch.etmles.auction.Repositories.LotRepository;
 import ch.etmles.auction.Repositories.EnchereRepository;
 import ch.etmles.auction.Repositories.CustomerRepository;
@@ -42,8 +41,14 @@ public class LotController {
     }
 
     @GetMapping("/categories/{categoryId}/lots")
-    public List<Lot> getLotsByCategory(@PathVariable Long categoryId) {
-        return lotRepository.findByCategory_Id(categoryId);
+    public List<Lot> getLotsByCategory(@PathVariable Long categoryId, @RequestParam(required = false) Long excludeCustomerId) {
+        if (excludeCustomerId != null) {
+            return lotRepository.findByCategory_Id(categoryId).stream()
+                    .filter(lot -> !lot.getCustomer().getId().equals(excludeCustomerId))
+                    .toList();
+        } else {
+            return lotRepository.findByCategory_Id(categoryId);
+        }
     }
 
     @GetMapping("/status/{status}")
@@ -111,14 +116,18 @@ public class LotController {
                         // Send notification to the highest bidder
                         String buyerMessage = "Félicitations ! Vous avez remporté l'enchère pour le lot: " + lot.getDescription() + " avec un montant de " + highestBid.get().getAmount() + " €.";
                         notificationService.addNotification(buyerMessage, highestBid.get().getCustomer(), lot, highestBid.get().getAmount());
+
+                        // Send notification to the seller
+                        String sellerMessage = "Votre lot " + lot.getDescription() + " a trouvé un acheteur. Montant de l'enchère: " + highestBid.get().getAmount() + " €.";
+                        notificationService.addNotification(sellerMessage, lot.getCustomer(), lot, highestBid.get().getAmount());
                     } else {
                         lot.setStatus("inactive");
                         lot.setHighestBidder(null);
-                    }
 
-                    // Send notification to the seller
-                    String sellerMessage = highestBid.isPresent() ? "Votre lot " + lot.getDescription() + " a été vendu." : "Votre lot " + lot.getDescription() + " n'a pas trouvé d'acheteur.";
-                    notificationService.addNotification(sellerMessage, lot.getCustomer(), lot, null);
+                        // Send notification to the seller
+                        String sellerMessage = "Votre lot " + lot.getDescription() + " n'a pas trouvé d'acheteur.";
+                        notificationService.addNotification(sellerMessage, lot.getCustomer(), lot, null);
+                    }
 
                     return lotRepository.save(lot);
                 })
