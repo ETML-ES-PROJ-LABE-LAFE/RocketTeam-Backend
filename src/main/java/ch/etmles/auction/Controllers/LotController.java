@@ -2,8 +2,11 @@ package ch.etmles.auction.Controllers;
 
 import ch.etmles.auction.Entities.Lot;
 import ch.etmles.auction.Entities.Enchere;
+import ch.etmles.auction.Entities.Notification;
 import ch.etmles.auction.Repositories.LotRepository;
 import ch.etmles.auction.Repositories.EnchereRepository;
+import ch.etmles.auction.Repositories.CustomerRepository;
+import ch.etmles.auction.Services.NotificationService;
 import ch.etmles.auction.config.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +20,15 @@ public class LotController {
 
     private final LotRepository lotRepository;
     private final EnchereRepository enchereRepository;
+    private final CustomerRepository customerRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    public LotController(LotRepository lotRepository, EnchereRepository enchereRepository) {
+    public LotController(LotRepository lotRepository, EnchereRepository enchereRepository, CustomerRepository customerRepository, NotificationService notificationService) {
         this.lotRepository = lotRepository;
         this.enchereRepository = enchereRepository;
+        this.customerRepository = customerRepository;
+        this.notificationService = notificationService;
     }
 
     @GetMapping
@@ -32,6 +39,11 @@ public class LotController {
     @GetMapping("/customer/{customerId}")
     public List<Lot> getLotsByCustomer(@PathVariable Long customerId) {
         return lotRepository.findByCustomer_Id(customerId);
+    }
+
+    @GetMapping("/categories/{categoryId}/lots")
+    public List<Lot> getLotsByCategory(@PathVariable Long categoryId) {
+        return lotRepository.findByCategory_Id(categoryId);
     }
 
     @GetMapping("/status/{status}")
@@ -95,16 +107,23 @@ public class LotController {
                     if (highestBid.isPresent()) {
                         lot.setHighestBidder(highestBid.get().getCustomer());
                         lot.setStatus("awaiting payment");
+
+                        // Send notification to the highest bidder
+                        String buyerMessage = "Félicitations ! Vous avez remporté l'enchère pour le lot: " + lot.getDescription() + " avec un montant de " + highestBid.get().getAmount() + " €.";
+                        notificationService.addNotification(buyerMessage, highestBid.get().getCustomer(), lot, highestBid.get().getAmount());
                     } else {
                         lot.setStatus("inactive");
                         lot.setHighestBidder(null);
                     }
 
+                    // Send notification to the seller
+                    String sellerMessage = highestBid.isPresent() ? "Votre lot " + lot.getDescription() + " a été vendu." : "Votre lot " + lot.getDescription() + " n'a pas trouvé d'acheteur.";
+                    notificationService.addNotification(sellerMessage, lot.getCustomer(), lot, null);
+
                     return lotRepository.save(lot);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
     }
-
 
     @GetMapping("/bid/{customerId}")
     public List<Lot> getLotsBidByCustomer(@PathVariable Long customerId) {
