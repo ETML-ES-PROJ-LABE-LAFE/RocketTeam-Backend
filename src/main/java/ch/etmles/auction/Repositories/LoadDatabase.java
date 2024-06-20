@@ -24,14 +24,12 @@ public class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(CategoryRepository categoryRepository, LotRepository lotRepository, CustomerRepository customerRepository, EnchereRepository enchereRepository) {
         return args -> {
-            //Création des users
-            /*User Admin = userRepository.save(new User("Cpte_Admin", "admin@etml-es.ch"));*/
+
             Customer Identify1 = customerRepository.save(new Customer("Nicolas", "nicolas@etml-es.ch", new BigDecimal("100000.0")));
             Customer Identify2 = customerRepository.save(new Customer("Evan", "evan@etml-es.ch", new BigDecimal("150000.0")));
             Customer Identify3 = customerRepository.save(new Customer("Bruno", "bruno@etml-es.ch", new BigDecimal("200000.0")));
             Customer Identify4 = customerRepository.save(new Customer("Dylan", "dylan@etml-es.ch", new BigDecimal("5000.0")));
 
-            // Création et sauvegarde des catégories
             Category mainCategory1 = categoryRepository.save(new Category("Vêtements", null));
             Category mainCategory2 = categoryRepository.save(new Category("Meubles", null));
             Category mainCategory3 = categoryRepository.save(new Category("Électronique", null));
@@ -40,13 +38,12 @@ public class LoadDatabase {
             Category subCategory2 = categoryRepository.save(new Category("Bas", mainCategory1));
             Category subCategory3 = categoryRepository.save(new Category("Chambre", mainCategory2));
             Category subCategory4 = categoryRepository.save(new Category("Salon", mainCategory2));
-            Category subCategory5 = categoryRepository.save(new Category("Téléviseurs", mainCategory3)); // Sous-catégorie pour l'électronique
-            Category subCategory6 = categoryRepository.save(new Category("Smartphones", mainCategory3)); // Sous-catégorie pour l'électronique
-            Category subCategory7 = categoryRepository.save(new Category("Ordinateurs", mainCategory3)); // Sous-catégorie pour l'électronique
+            Category subCategory5 = categoryRepository.save(new Category("Téléviseurs", mainCategory3));
+            Category subCategory6 = categoryRepository.save(new Category("Smartphones", mainCategory3));
+            Category subCategory7 = categoryRepository.save(new Category("Ordinateurs", mainCategory3));
             Category subCategory8 = categoryRepository.save(new Category("Accessoires", mainCategory3));
             Category subCategory9 = categoryRepository.save(new Category("Appareils photo", mainCategory3));
 
-            // Création et sauvegarde des lots avec leurs sous-catégories
             Lot lot1 = lotRepository.save(new Lot("Pull Gucci",s3BucketUrl + "pull_gucci.jpg", subCategory1, 100.0, 150.0, "active", Identify1));
             Lot lot2 = lotRepository.save(new Lot("T-Shirt Ralph Lauren", s3BucketUrl + "t-shirt_ralphlauren.jpg", subCategory1, 200.0, 250.0, "active", Identify2));
             Lot lot3 = lotRepository.save(new Lot("Pantalon Jack&Jones", s3BucketUrl + "pantalon_jackandjones.jpg", subCategory2, 300.0, 350.0, "active", Identify1));

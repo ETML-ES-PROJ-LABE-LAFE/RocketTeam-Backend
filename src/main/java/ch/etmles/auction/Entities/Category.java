@@ -22,7 +22,7 @@ public class Category {
         this.parentCategory = parentCategory;
     }
 
-    //can't delete it. if deleted, create bug in the frontend
+
     public Long getId() {
         return id;
     }
@@ -30,7 +30,7 @@ public class Category {
     public void setId(Long id) {
         this.id = id;
     }
-
+    //can't delete it. if deleted, create bug in the frontend
     public String getName() {
         return name;
     }

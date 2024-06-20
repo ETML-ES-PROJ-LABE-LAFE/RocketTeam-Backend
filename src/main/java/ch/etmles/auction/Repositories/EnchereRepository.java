@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface EnchereRepository extends JpaRepository<Enchere, Long> {
     Optional<Enchere> findTopByLotIdOrderByAmountDesc(Long lotId);
-    List<Enchere> findAllByCustomerId(Long customerId); // Ajoutez cette ligne
+    List<Enchere> findAllByCustomerId(Long customerId);
 }
