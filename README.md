@@ -1,51 +1,60 @@
 # AuctionApp - Backend
 
 ## Description
+
 Ce projet est une application Web en Java Spring Boot qui fournit une API RESTful afin de gérer les ventes aux enchères.
 
 L'application inclut les fonctionnalités suivantes :
-
- - Opérations CRUD pour les catégories, lots, enchères et utilisateurs.
- - Gestion des exceptions pour les entités non trouvées.
- - Chargement initial des données.
- - Initialisation d'utilisateurs tests.
+- Opérations CRUD pour les catégories, lots, enchères et utilisateurs.
+- Gestion des exceptions pour les entités non trouvées.
+- Chargement initial des données.
+- Initialisation d'utilisateurs tests.
 
 ## Structure des Fichiers
 
 ### Configuration
- - **CorsConfig.java** : Configuration CORS pour permettre les requêtes cross-origin.
- - **IdUtil.java** : Configuration pour encoder et décoder l'id pour l'url de détails.
+- **CorsConfig.java** : Configuration CORS pour permettre les requêtes cross-origin.
+- **IdUtil.java** : Configuration pour encoder et décoder l'id pour l'url de détails.
 
 ### Contrôleurs
- - **CategoryController.java** : Gère les requêtes HTTP pour les catégories.
- - **LotController.java** : Gère les requêtes HTTP pour les lots.
- - **EnchereController.java** : Gère les requêtes HTTP pour les enchères.
- - **CustomerController.java** : Gère les requêtes HTTP pour les utilisateurs.
+- **AuctionController.java** : Gère les requêtes HTTP pour les enchères.
+- **CategoryController.java** : Gère les requêtes HTTP pour les catégories.
+- **CustomerController.java** : Gère les requêtes HTTP pour les utilisateurs.
+- **DashboardController.java** : Gère les requêtes HTTP pour le tableau de bord.
+- **LotController.java** : Gère les requêtes HTTP pour les lots.
+- **NotificationController.java** : Gère les requêtes HTTP pour les notifications.
 
 ### Modèles
- - **Category.java** : Représente l'entité Catégorie.
- - **Lot.java** : Représente l'entité Lot.
- - **Enchere.java** : Représente l'entité Enchère.
- - **Customer.java** : Représente l'entité Utilisateur.
+- **Auction.java** : Représente l'entité Enchère.
+- **Category.java** : Représente l'entité Catégorie.
+- **Customer.java** : Représente l'entité Utilisateur.
+- **Lot.java** : Représente l'entité Lot.
+- **Notification.java** : Représente l'entité Notification.
 
 ### Répertoires
- - **CategoryRepository.java** : Interface pour l'accès aux données des catégories.
- - **LotRepository.java** : Interface pour l'accès aux données des lots.
- - **EnchereRepository.java** : Interface pour l'accès aux données des enchères.
- - **CustomerRepository.java** : Interface pour l'accès aux données des utilisateurs.
- - **LoadDatabase.java** : Classe pour charger les données initiales dans la base de données.
+- **CategoryRepository.java** : Interface pour l'accès aux données des catégories.
+- **CustomerRepository.java** : Interface pour l'accès aux données des utilisateurs.
+- **EnchereRepository.java** : Interface pour l'accès aux données des enchères.
+- **LoadDatabase.java** : Classe pour charger les données initiales dans la base de données.
+- **LotRepository.java** : Interface pour l'accès aux données des lots.
+- **NotificationRepository.java** : Interface pour l'accès aux données des notifications.
 
 ### Exceptions
- - **CategoryNotFoundException.java** : Exception personnalisée pour catégorie non trouvée.
- - **LotNotFoundException.java** : Exception personnalisée pour lot non trouvé.
- - **UserNotFoundException.java** : Exception personnalisée pour utilisateur non trouvé.
- - **EnchereNotFoundException.java** : Exception personnalisée pour enchère non trouvée.
+- **AuctionErrorException.java** : Exception personnalisée pour une erreur d'enchère.
+- **CategoryErrorException.java** : Exception personnalisée pour une erreur de catégorie.
+- **CustomerErrorException.java** : Exception personnalisée pour une erreur d'utilisateur.
+- **LotErrorException.java** : Exception personnalisée pour une erreur de lot.
+- **NotificationErrorException.java** : Exception personnalisée pour une erreur de notification.
+
+### Services
+- **NotificationService.java** : Service pour gérer les notifications.
 
 ### Application Principale
- - **AuctionApplication.java** : Classe principale pour démarrer l'application Spring Boot.
+- **AuctionApplication.java** : Classe principale pour démarrer l'application Spring Boot.
 
 ### Configuration de l'application
- - **application.properties** : Fichier de configuration pour l'application Spring Boot.
+- **application.properties** : Fichier de configuration pour l'application Spring Boot.
+
 
 ## Comment Exécuter
  1. Clonez le dépôt.
