@@ -1,7 +1,7 @@
 package ch.etmles.auction.Repositories;
 
+import ch.etmles.auction.Entities.Auction;
 import ch.etmles.auction.Entities.Category;
-import ch.etmles.auction.Entities.Enchere;
 import ch.etmles.auction.Entities.Lot;
 import ch.etmles.auction.Entities.Customer;
 import org.slf4j.Logger;
@@ -82,141 +82,141 @@ public class LoadDatabase {
             Lot lot33 = lotRepository.save(new Lot("Batterie externe Anker 10000 mAh", s3BucketUrl + "batterie_anker.jpg", subCategory8, 35.0, 40.0, "active", Identify1));
             Lot lot34 = lotRepository.save(new Lot("Câble Lightning Apple", s3BucketUrl + "lightning_apple.jpg", subCategory8, 15.0, 20.0, "active", Identify2));
 
-            enchereRepository.save(new Enchere(new BigDecimal("150.0"), LocalDateTime.now(), lot1, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("200.0"), LocalDateTime.now(), lot1, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("250.0"), LocalDateTime.now().minusDays(1), lot1, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("150.0"), LocalDateTime.now(), lot1, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("200.0"), LocalDateTime.now(), lot1, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("250.0"), LocalDateTime.now().minusDays(1), lot1, Identify2));
 
-            enchereRepository.save(new Enchere(new BigDecimal("220.0"), LocalDateTime.now(), lot2, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("230.0"), LocalDateTime.now().minusDays(1), lot2, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("240.0"), LocalDateTime.now().minusDays(2), lot2, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("220.0"), LocalDateTime.now(), lot2, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("230.0"), LocalDateTime.now().minusDays(1), lot2, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("240.0"), LocalDateTime.now().minusDays(2), lot2, Identify1));
 
-            enchereRepository.save(new Enchere(new BigDecimal("330.0"), LocalDateTime.now(), lot3, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("340.0"), LocalDateTime.now().minusDays(1), lot3, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("350.0"), LocalDateTime.now().minusDays(2), lot3, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("330.0"), LocalDateTime.now(), lot3, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("340.0"), LocalDateTime.now().minusDays(1), lot3, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("350.0"), LocalDateTime.now().minusDays(2), lot3, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("430.0"), LocalDateTime.now(), lot4, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("440.0"), LocalDateTime.now().minusDays(1), lot4, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("450.0"), LocalDateTime.now().minusDays(2), lot4, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("430.0"), LocalDateTime.now(), lot4, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("440.0"), LocalDateTime.now().minusDays(1), lot4, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("450.0"), LocalDateTime.now().minusDays(2), lot4, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("530.0"), LocalDateTime.now(), lot5, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("540.0"), LocalDateTime.now().minusDays(1), lot5, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("550.0"), LocalDateTime.now().minusDays(2), lot5, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("530.0"), LocalDateTime.now(), lot5, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("540.0"), LocalDateTime.now().minusDays(1), lot5, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("550.0"), LocalDateTime.now().minusDays(2), lot5, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("630.0"), LocalDateTime.now(), lot6, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("640.0"), LocalDateTime.now().minusDays(1), lot6, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("650.0"), LocalDateTime.now().minusDays(2), lot6, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("630.0"), LocalDateTime.now(), lot6, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("640.0"), LocalDateTime.now().minusDays(1), lot6, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("650.0"), LocalDateTime.now().minusDays(2), lot6, Identify1));
 
-            enchereRepository.save(new Enchere(new BigDecimal("730.0"), LocalDateTime.now(), lot7, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("740.0"), LocalDateTime.now().minusDays(1), lot7, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("750.0"), LocalDateTime.now().minusDays(2), lot7, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("730.0"), LocalDateTime.now(), lot7, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("740.0"), LocalDateTime.now().minusDays(1), lot7, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("750.0"), LocalDateTime.now().minusDays(2), lot7, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("830.0"), LocalDateTime.now(), lot8, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("840.0"), LocalDateTime.now().minusDays(1), lot8, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("850.0"), LocalDateTime.now().minusDays(2), lot8, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("830.0"), LocalDateTime.now(), lot8, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("840.0"), LocalDateTime.now().minusDays(1), lot8, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("850.0"), LocalDateTime.now().minusDays(2), lot8, Identify1));
 
-            enchereRepository.save(new Enchere(new BigDecimal("930.0"), LocalDateTime.now(), lot9, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("940.0"), LocalDateTime.now().minusDays(1), lot9, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("950.0"), LocalDateTime.now().minusDays(2), lot9, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("930.0"), LocalDateTime.now(), lot9, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("940.0"), LocalDateTime.now().minusDays(1), lot9, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("950.0"), LocalDateTime.now().minusDays(2), lot9, Identify2));
 
-            enchereRepository.save(new Enchere(new BigDecimal("1030.0"), LocalDateTime.now(), lot10, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("1040.0"), LocalDateTime.now().minusDays(1), lot10, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("1050.0"), LocalDateTime.now().minusDays(2), lot10, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("1030.0"), LocalDateTime.now(), lot10, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("1040.0"), LocalDateTime.now().minusDays(1), lot10, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("1050.0"), LocalDateTime.now().minusDays(2), lot10, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("1130.0"), LocalDateTime.now(), lot11, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("1140.0"), LocalDateTime.now().minusDays(1), lot11, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("1150.0"), LocalDateTime.now().minusDays(2), lot11, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("1130.0"), LocalDateTime.now(), lot11, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("1140.0"), LocalDateTime.now().minusDays(1), lot11, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("1150.0"), LocalDateTime.now().minusDays(2), lot11, Identify2));
 
-            enchereRepository.save(new Enchere(new BigDecimal("1230.0"), LocalDateTime.now(), lot12, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("1240.0"), LocalDateTime.now().minusDays(1), lot12, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("1250.0"), LocalDateTime.now().minusDays(2), lot12, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("1230.0"), LocalDateTime.now(), lot12, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("1240.0"), LocalDateTime.now().minusDays(1), lot12, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("1250.0"), LocalDateTime.now().minusDays(2), lot12, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("1330.0"), LocalDateTime.now(), lot13, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("1340.0"), LocalDateTime.now().minusDays(1), lot13, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("1350.0"), LocalDateTime.now().minusDays(2), lot13, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("1330.0"), LocalDateTime.now(), lot13, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("1340.0"), LocalDateTime.now().minusDays(1), lot13, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("1350.0"), LocalDateTime.now().minusDays(2), lot13, Identify2));
 
-            enchereRepository.save(new Enchere(new BigDecimal("1430.0"), LocalDateTime.now(), lot14, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("1440.0"), LocalDateTime.now().minusDays(1), lot14, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("1450.0"), LocalDateTime.now().minusDays(2), lot14, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("1430.0"), LocalDateTime.now(), lot14, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("1440.0"), LocalDateTime.now().minusDays(1), lot14, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("1450.0"), LocalDateTime.now().minusDays(2), lot14, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("1530.0"), LocalDateTime.now(), lot15, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("1540.0"), LocalDateTime.now().minusDays(1), lot15, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("1550.0"), LocalDateTime.now().minusDays(2), lot15, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("1530.0"), LocalDateTime.now(), lot15, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("1540.0"), LocalDateTime.now().minusDays(1), lot15, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("1550.0"), LocalDateTime.now().minusDays(2), lot15, Identify1));
 
-            enchereRepository.save(new Enchere(new BigDecimal("13.0"), LocalDateTime.now(), lot16, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("14.0"), LocalDateTime.now().minusDays(1), lot16, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("15.0"), LocalDateTime.now().minusDays(2), lot16, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("13.0"), LocalDateTime.now(), lot16, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("14.0"), LocalDateTime.now().minusDays(1), lot16, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("15.0"), LocalDateTime.now().minusDays(2), lot16, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("8.0"), LocalDateTime.now(), lot17, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("9.0"), LocalDateTime.now().minusDays(1), lot17, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("10.0"), LocalDateTime.now().minusDays(2), lot17, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("8.0"), LocalDateTime.now(), lot17, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("9.0"), LocalDateTime.now().minusDays(1), lot17, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("10.0"), LocalDateTime.now().minusDays(2), lot17, Identify2));
 
-            enchereRepository.save(new Enchere(new BigDecimal("930.0"), LocalDateTime.now(), lot18, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("940.0"), LocalDateTime.now().minusDays(1), lot18, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("950.0"), LocalDateTime.now().minusDays(2), lot18, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("930.0"), LocalDateTime.now(), lot18, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("940.0"), LocalDateTime.now().minusDays(1), lot18, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("950.0"), LocalDateTime.now().minusDays(2), lot18, Identify2));
 
-            enchereRepository.save(new Enchere(new BigDecimal("1030.0"), LocalDateTime.now(), lot19, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("1040.0"), LocalDateTime.now().minusDays(1), lot19, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("1050.0"), LocalDateTime.now().minusDays(2), lot19, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("1030.0"), LocalDateTime.now(), lot19, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("1040.0"), LocalDateTime.now().minusDays(1), lot19, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("1050.0"), LocalDateTime.now().minusDays(2), lot19, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("18.0"), LocalDateTime.now(), lot20, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("19.0"), LocalDateTime.now().minusDays(1), lot20, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("20.0"), LocalDateTime.now().minusDays(2), lot20, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("18.0"), LocalDateTime.now(), lot20, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("19.0"), LocalDateTime.now().minusDays(1), lot20, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("20.0"), LocalDateTime.now().minusDays(2), lot20, Identify2));
 
-            enchereRepository.save(new Enchere(new BigDecimal("630.0"), LocalDateTime.now(), lot21, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("640.0"), LocalDateTime.now().minusDays(1), lot21, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("650.0"), LocalDateTime.now().minusDays(2), lot21, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("630.0"), LocalDateTime.now(), lot21, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("640.0"), LocalDateTime.now().minusDays(1), lot21, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("650.0"), LocalDateTime.now().minusDays(2), lot21, Identify1));
 
-            enchereRepository.save(new Enchere(new BigDecimal("28.0"), LocalDateTime.now(), lot22, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("29.0"), LocalDateTime.now().minusDays(1), lot22, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("30.0"), LocalDateTime.now().minusDays(2), lot22, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("28.0"), LocalDateTime.now(), lot22, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("29.0"), LocalDateTime.now().minusDays(1), lot22, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("30.0"), LocalDateTime.now().minusDays(2), lot22, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("180.0"), LocalDateTime.now(), lot23, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("190.0"), LocalDateTime.now().minusDays(1), lot23, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("200.0"), LocalDateTime.now().minusDays(2), lot23, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("180.0"), LocalDateTime.now(), lot23, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("190.0"), LocalDateTime.now().minusDays(1), lot23, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("200.0"), LocalDateTime.now().minusDays(2), lot23, Identify1));
 
-            enchereRepository.save(new Enchere(new BigDecimal("55.0"), LocalDateTime.now(), lot24, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("56.0"), LocalDateTime.now().minusDays(1), lot24, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("60.0"), LocalDateTime.now().minusDays(2), lot24, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("55.0"), LocalDateTime.now(), lot24, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("56.0"), LocalDateTime.now().minusDays(1), lot24, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("60.0"), LocalDateTime.now().minusDays(2), lot24, Identify2));
 
-            enchereRepository.save(new Enchere(new BigDecimal("430.0"), LocalDateTime.now(), lot25, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("440.0"), LocalDateTime.now().minusDays(1), lot25, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("450.0"), LocalDateTime.now().minusDays(2), lot25, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("430.0"), LocalDateTime.now(), lot25, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("440.0"), LocalDateTime.now().minusDays(1), lot25, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("450.0"), LocalDateTime.now().minusDays(2), lot25, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("380.0"), LocalDateTime.now(), lot26, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("390.0"), LocalDateTime.now().minusDays(1), lot26, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("400.0"), LocalDateTime.now().minusDays(2), lot26, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("380.0"), LocalDateTime.now(), lot26, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("390.0"), LocalDateTime.now().minusDays(1), lot26, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("400.0"), LocalDateTime.now().minusDays(2), lot26, Identify1));
 
-            enchereRepository.save(new Enchere(new BigDecimal("23.0"), LocalDateTime.now(), lot27, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("24.0"), LocalDateTime.now().minusDays(1), lot27, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("25.0"), LocalDateTime.now().minusDays(2), lot27, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("23.0"), LocalDateTime.now(), lot27, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("24.0"), LocalDateTime.now().minusDays(1), lot27, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("25.0"), LocalDateTime.now().minusDays(2), lot27, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("170.0"), LocalDateTime.now(), lot28, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("175.0"), LocalDateTime.now().minusDays(1), lot28, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("180.0"), LocalDateTime.now().minusDays(2), lot28, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("170.0"), LocalDateTime.now(), lot28, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("175.0"), LocalDateTime.now().minusDays(1), lot28, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("180.0"), LocalDateTime.now().minusDays(2), lot28, Identify1));
 
-            enchereRepository.save(new Enchere(new BigDecimal("32.0"), LocalDateTime.now(), lot29, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("33.0"), LocalDateTime.now().minusDays(1), lot29, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("35.0"), LocalDateTime.now().minusDays(2), lot29, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("32.0"), LocalDateTime.now(), lot29, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("33.0"), LocalDateTime.now().minusDays(1), lot29, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("35.0"), LocalDateTime.now().minusDays(2), lot29, Identify1));
 
-            enchereRepository.save(new Enchere(new BigDecimal("110.0"), LocalDateTime.now(), lot30, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("115.0"), LocalDateTime.now().minusDays(1), lot30, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("120.0"), LocalDateTime.now().minusDays(2), lot30, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("110.0"), LocalDateTime.now(), lot30, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("115.0"), LocalDateTime.now().minusDays(1), lot30, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("120.0"), LocalDateTime.now().minusDays(2), lot30, Identify3));
 
-            enchereRepository.save(new Enchere(new BigDecimal("28.0"), LocalDateTime.now(), lot31, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("29.0"), LocalDateTime.now().minusDays(1), lot31, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("30.0"), LocalDateTime.now().minusDays(2), lot31, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("28.0"), LocalDateTime.now(), lot31, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("29.0"), LocalDateTime.now().minusDays(1), lot31, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("30.0"), LocalDateTime.now().minusDays(2), lot31, Identify2));
 
-            enchereRepository.save(new Enchere(new BigDecimal("23.0"), LocalDateTime.now(), lot32, Identify1));
-            enchereRepository.save(new Enchere(new BigDecimal("24.0"), LocalDateTime.now().minusDays(1), lot32, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("25.0"), LocalDateTime.now().minusDays(2), lot32, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("23.0"), LocalDateTime.now(), lot32, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("24.0"), LocalDateTime.now().minusDays(1), lot32, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("25.0"), LocalDateTime.now().minusDays(2), lot32, Identify1));
 
-            enchereRepository.save(new Enchere(new BigDecimal("38.0"), LocalDateTime.now(), lot33, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("39.0"), LocalDateTime.now().minusDays(1), lot33, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("40.0"), LocalDateTime.now().minusDays(2), lot33, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("38.0"), LocalDateTime.now(), lot33, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("39.0"), LocalDateTime.now().minusDays(1), lot33, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("40.0"), LocalDateTime.now().minusDays(2), lot33, Identify2));
 
-            enchereRepository.save(new Enchere(new BigDecimal("18.0"), LocalDateTime.now(), lot34, Identify3));
-            enchereRepository.save(new Enchere(new BigDecimal("19.0"), LocalDateTime.now().minusDays(1), lot34, Identify2));
-            enchereRepository.save(new Enchere(new BigDecimal("20.0"), LocalDateTime.now().minusDays(2), lot34, Identify1));
+            enchereRepository.save(new Auction(new BigDecimal("18.0"), LocalDateTime.now(), lot34, Identify3));
+            enchereRepository.save(new Auction(new BigDecimal("19.0"), LocalDateTime.now().minusDays(1), lot34, Identify2));
+            enchereRepository.save(new Auction(new BigDecimal("20.0"), LocalDateTime.now().minusDays(2), lot34, Identify1));
         };
     }
 }

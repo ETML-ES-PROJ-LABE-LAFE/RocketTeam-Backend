@@ -7,6 +7,8 @@ import ch.etmles.auction.Repositories.LotRepository;
 import ch.etmles.auction.Repositories.CustomerRepository;
 import ch.etmles.auction.Repositories.NotificationRepository;
 import ch.etmles.auction.config.IdUtil;
+import ch.etmles.auction.Exceptions.LotErrorException.LotNotFoundException;
+import ch.etmles.auction.Exceptions.CustomerErrorException.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +68,7 @@ public class DashboardController {
         Optional<Customer> buyerOpt = customerRepository.findById(userId);
 
         if (lotOpt.isEmpty() || buyerOpt.isEmpty()) {
-            return ResponseEntity.badRequest().body("Lot or user not found");
+            throw new LotNotFoundException(lotId);
         }
 
         Lot lot = lotOpt.get();
@@ -93,7 +95,7 @@ public class DashboardController {
     private void sendNotificationToSeller(Lot lot, Customer seller) {
         Notification notification = new Notification();
         notification.setMessage("Le lot " + lot.getDescription() + " a été payé. Montant: " + lot.getHighestBid() + " €");
-        notification.setUser(seller); // Le vendeur
+        notification.setUser(seller);
         notification.setLot(lot);
         notification.setBidAmount(lot.getHighestBid());
         notificationRepository.save(notification);

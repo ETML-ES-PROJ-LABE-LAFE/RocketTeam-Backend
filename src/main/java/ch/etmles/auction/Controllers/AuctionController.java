@@ -1,8 +1,9 @@
 package ch.etmles.auction.Controllers;
 
+import ch.etmles.auction.Entities.Auction;
 import ch.etmles.auction.Entities.Customer;
-import ch.etmles.auction.Entities.Enchere;
 import ch.etmles.auction.Entities.Lot;
+import ch.etmles.auction.Exceptions.AuctionErrorException;
 import ch.etmles.auction.Services.NotificationService;
 import ch.etmles.auction.Repositories.EnchereRepository;
 import ch.etmles.auction.Repositories.LotRepository;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/encheres")
-public class EnchereController {
+public class AuctionController {
 
     private final EnchereRepository enchereRepository;
     private final LotRepository lotRepository;
@@ -24,7 +25,7 @@ public class EnchereController {
     private final NotificationService notificationService;
 
     @Autowired
-    public EnchereController(EnchereRepository enchereRepository, LotRepository lotRepository, CustomerRepository customerRepository, NotificationService notificationService) {
+    public AuctionController(EnchereRepository enchereRepository, LotRepository lotRepository, CustomerRepository customerRepository, NotificationService notificationService) {
         this.enchereRepository = enchereRepository;
         this.lotRepository = lotRepository;
         this.customerRepository = customerRepository;
@@ -32,24 +33,24 @@ public class EnchereController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> placeEnchere(@RequestBody Enchere enchere) {
-        Optional<Lot> lotOptional = lotRepository.findById(enchere.getLot().getId());
-        Optional<Customer> customerOptional = customerRepository.findById(enchere.getCustomer().getId());
+    public ResponseEntity<?> placeEnchere(@RequestBody Auction auction) {
+        Optional<Lot> lotOptional = lotRepository.findById(auction.getLot().getId());
+        Optional<Customer> customerOptional = customerRepository.findById(auction.getCustomer().getId());
 
         if (lotOptional.isPresent() && customerOptional.isPresent()) {
             Lot lot = lotOptional.get();
             Customer customer = customerOptional.get();
 
             BigDecimal totalBidAmount = enchereRepository.findAllByCustomerId(customer.getId()).stream()
-                    .map(Enchere::getAmount)
+                    .map(Auction::getAmount)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
 
             BigDecimal availableBalance = customer.getBalance().subtract(totalBidAmount.add(customer.getReservedBalance()));
 
-            if (enchere.getAmount().compareTo(lot.getHighestBid()) <= 0) {
-                return ResponseEntity.badRequest().body(new EnchereErrorException("Votre offre doit être supérieure à l'offre la plus élevée."));
-            } else if (totalBidAmount.add(enchere.getAmount()).compareTo(customer.getBalance()) > 0) {
-                return ResponseEntity.badRequest().body(new EnchereErrorException("Votre offre dépasse votre solde disponible."));
+            if (auction.getAmount().compareTo(lot.getHighestBid()) <= 0) {
+                throw new AuctionErrorException("Votre offre doit être supérieure à l'offre la plus élevée.");
+            } else if (totalBidAmount.add(auction.getAmount()).compareTo(customer.getBalance()) > 0) {
+                throw new AuctionErrorException("Votre offre dépasse votre solde disponible.");
             } else {
                 if (lot.getHighestBidder() != null && !lot.getHighestBidder().getId().equals(customer.getId())) {
                     Customer previousHighestBidder = lot.getHighestBidder();
@@ -58,21 +59,21 @@ public class EnchereController {
 
                     // Add notification for the previous highest bidder
                     String message = "Vous avez été surenchéri sur le lot: " + lot.getDescription();
-                    notificationService.addNotification(message, previousHighestBidder, lot, enchere.getAmount());
+                    notificationService.addNotification(message, previousHighestBidder, lot, auction.getAmount());
                 }
 
-                lot.setHighestBid(enchere.getAmount());
+                lot.setHighestBid(auction.getAmount());
                 lot.setHighestBidder(customer);
                 lotRepository.save(lot);
 
-                customer.setReservedBalance(customer.getReservedBalance().add(enchere.getAmount()));
+                customer.setReservedBalance(customer.getReservedBalance().add(auction.getAmount()));
                 customerRepository.save(customer);
 
-                Enchere savedEnchere = enchereRepository.save(enchere);
-                return ResponseEntity.ok(savedEnchere);
+                Auction savedAuction = enchereRepository.save(auction);
+                return ResponseEntity.ok(savedAuction);
             }
         } else {
-            return ResponseEntity.notFound().build();
+            throw new AuctionErrorException("Lot or customer not found");
         }
     }
 
@@ -80,7 +81,7 @@ public class EnchereController {
     public ResponseEntity<BigDecimal> getTotalBidAmountByCustomer(@PathVariable Long customerId) {
         BigDecimal totalBidAmount = enchereRepository.findAllByCustomerId(customerId)
                 .stream()
-                .map(Enchere::getAmount)
+                .map(Auction::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         return ResponseEntity.ok(totalBidAmount);
     }
@@ -97,16 +98,16 @@ public class EnchereController {
             if (lot.getHighestBidder() != null && !lot.getHighestBidder().getId().equals(customerId)) {
                 BigDecimal reservedAmount = enchereRepository.findAllByCustomerId(customerId).stream()
                         .filter(e -> e.getLot().getId().equals(lotId))
-                        .map(Enchere::getAmount)
+                        .map(Auction::getAmount)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
                 customer.setReservedBalance(customer.getReservedBalance().subtract(reservedAmount));
                 customerRepository.save(customer);
                 return ResponseEntity.ok().build();
             } else {
-                return ResponseEntity.badRequest().body(new EnchereErrorException("Impossible de libérer le solde réservé car l'enchère est toujours la plus haute."));
+                throw new AuctionErrorException("Impossible de libérer le solde réservé car l'enchère est toujours la plus haute.");
             }
         } else {
-            return ResponseEntity.notFound().build();
+            throw new AuctionErrorException("Lot or customer not found");
         }
     }
 }
