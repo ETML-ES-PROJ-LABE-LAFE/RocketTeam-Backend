@@ -18,7 +18,7 @@ public class Lot {
     private String image;
     private double initialPrice;
     private BigDecimal highestBid;
-    private String status; // New field for status
+    private String status;
 
     @ManyToOne
     private Category category;
@@ -41,7 +41,6 @@ public class Lot {
         this.customer = customer;
     }
 
-    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -58,7 +57,7 @@ public class Lot {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    //can't delete it. if deleted, create bug in the frontend
     public String getImage() {
         return image;
     }
