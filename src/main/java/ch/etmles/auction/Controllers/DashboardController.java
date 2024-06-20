@@ -36,11 +36,6 @@ public class DashboardController {
         return lotRepository.findByStatusAndCustomer_Id("active", customerId);
     }
 
-    @GetMapping("/lotsSold/{customerId}")
-    public List<Lot> getLotsSold(@PathVariable Long customerId) {
-        return lotRepository.findByStatusAndHighestBidder_Id("paid", customerId);
-    }
-
     @GetMapping("/lotsAffected/{customerId}")
     public List<Lot> getLotsAffected(@PathVariable Long customerId) {
         return lotRepository.findByStatusAndHighestBidder_Id("awaiting payment", customerId);
@@ -56,8 +51,8 @@ public class DashboardController {
         return lotRepository.findByCustomer_Id(customerId);
     }
 
-    @GetMapping("/lotsVendues/{customerId}")
-    public List<Lot> getLotsVendues(@PathVariable Long customerId) {
+    @GetMapping("/lotsSolds/{customerId}")
+    public List<Lot> getLotsSold(@PathVariable Long customerId) {
         return lotRepository.findByStatusAndCustomer_Id("paid", customerId);
     }
 
