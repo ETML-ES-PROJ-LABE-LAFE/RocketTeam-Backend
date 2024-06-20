@@ -43,7 +43,6 @@ public class Notification {
     public void setId(Long id) {
         this.id = id;
     }
-    //can't delete it. if deleted, create bug in the frontend
     public String getMessage() {
         return message;
     }

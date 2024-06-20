@@ -14,7 +14,5 @@ public interface LotRepository extends JpaRepository<Lot, Long> {
     List<Lot> findByStatusAndCustomer_Id(String status, Long customerId);
     List<Lot> findByHighestBidder_Id(Long customerId);
     List<Lot> findByStatusAndHighestBidder_Id(String status, Long highestBidderId);
-    List<Lot> findByHighestBidder_IdAndStatusNot(Long highestBidderId, String status);
-
     List<Lot> findByHighestBidder_IdAndStatus(Long customerId, String active);
 }

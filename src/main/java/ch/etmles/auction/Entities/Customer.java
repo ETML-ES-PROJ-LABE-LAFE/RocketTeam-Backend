@@ -43,7 +43,6 @@ public class Customer {
     public void setId(Long id) {
         this.id = id;
     }
-    //can't delete it. if deleted, create bug in the frontend
     public String getName() {
         return customername;
     }

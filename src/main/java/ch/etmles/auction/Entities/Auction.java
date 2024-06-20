@@ -40,7 +40,6 @@ public class Auction {
     public BigDecimal getAmount() {
         return amount;
     }
-    //can't delete it. if deleted, create bug in the frontend
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }

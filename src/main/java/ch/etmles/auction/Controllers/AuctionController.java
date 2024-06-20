@@ -45,8 +45,6 @@ public class AuctionController {
                     .map(Auction::getAmount)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-            BigDecimal availableBalance = customer.getBalance().subtract(totalBidAmount.add(customer.getReservedBalance()));
-
             if (auction.getAmount().compareTo(lot.getHighestBid()) <= 0) {
                 throw new AuctionErrorException("Votre offre doit être supérieure à l'offre la plus élevée.");
             } else if (totalBidAmount.add(auction.getAmount()).compareTo(customer.getBalance()) > 0) {
@@ -57,7 +55,7 @@ public class AuctionController {
                     previousHighestBidder.setReservedBalance(previousHighestBidder.getReservedBalance().subtract(lot.getHighestBid()));
                     customerRepository.save(previousHighestBidder);
 
-                    // Add notification for the previous highest bidder
+
                     String message = "Vous avez été surenchéri sur le lot: " + lot.getDescription();
                     notificationService.addNotification(message, previousHighestBidder, lot, auction.getAmount());
                 }

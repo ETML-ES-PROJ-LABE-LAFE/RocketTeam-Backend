@@ -115,18 +115,18 @@ public class LotController {
                         lot.setHighestBidder(highestBid.get().getCustomer());
                         lot.setStatus("awaiting payment");
 
-                        // Send notification to the highest bidder
+
                         String buyerMessage = "Félicitations ! Vous avez remporté l'enchère pour le lot: " + lot.getDescription() + " avec un montant de " + highestBid.get().getAmount() + " €.";
                         notificationService.addNotification(buyerMessage, highestBid.get().getCustomer(), lot, highestBid.get().getAmount());
 
-                        // Send notification to the seller
+
                         String sellerMessage = "Votre lot " + lot.getDescription() + " a trouvé un acheteur. Montant de l'enchère: " + highestBid.get().getAmount() + " €.";
                         notificationService.addNotification(sellerMessage, lot.getCustomer(), lot, highestBid.get().getAmount());
                     } else {
                         lot.setStatus("inactive");
                         lot.setHighestBidder(null);
 
-                        // Send notification to the seller
+
                         String sellerMessage = "Votre lot " + lot.getDescription() + " n'a pas trouvé d'acheteur.";
                         notificationService.addNotification(sellerMessage, lot.getCustomer(), lot, null);
                     }

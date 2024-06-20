@@ -1,14 +1,12 @@
 package ch.etmles.auction.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 import java.math.BigDecimal;
-import java.util.Objects; // Ajout de cette ligne pour importer la classe Objects
+import java.util.Objects;
 
 @Entity
 public class Lot {
@@ -37,7 +35,7 @@ public class Lot {
         this.category = category;
         this.initialPrice = initialPrice;
         this.highestBid = BigDecimal.valueOf(highestBid);
-        this.status = status; // Initialize new field
+        this.status = status;
         this.customer = customer;
     }
 
@@ -57,7 +55,6 @@ public class Lot {
     public void setDescription(String description) {
         this.description = description;
     }
-    //can't delete it. if deleted, create bug in the frontend
     public String getImage() {
         return image;
     }
