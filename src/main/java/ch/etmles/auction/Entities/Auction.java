@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class Enchere {
+public class Auction {
     private @Id @GeneratedValue Long id;
     private BigDecimal amount;
     private LocalDateTime timestamp;
@@ -20,9 +20,9 @@ public class Enchere {
     @ManyToOne
     private Customer customer;
 
-    public Enchere() {}
+    public Auction() {}
 
-    public Enchere(BigDecimal amount, LocalDateTime timestamp, Lot lot, Customer customer) {
+    public Auction(BigDecimal amount, LocalDateTime timestamp, Lot lot, Customer customer) {
         this.amount = amount;
         this.timestamp = timestamp;
         this.lot = lot;
@@ -72,13 +72,13 @@ public class Enchere {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Enchere)) return false;
-        Enchere enchere = (Enchere) o;
-        return Objects.equals(id, enchere.id) &&
-                Objects.equals(amount, enchere.amount) &&
-                Objects.equals(timestamp, enchere.timestamp) &&
-                Objects.equals(lot, enchere.lot) &&
-                Objects.equals(customer, enchere.customer);
+        if (!(o instanceof Auction)) return false;
+        Auction auction = (Auction) o;
+        return Objects.equals(id, auction.id) &&
+                Objects.equals(amount, auction.amount) &&
+                Objects.equals(timestamp, auction.timestamp) &&
+                Objects.equals(lot, auction.lot) &&
+                Objects.equals(customer, auction.customer);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class Enchere {
 
     @Override
     public String toString() {
-        return "Enchere{" +
+        return "Auction{" +
                 "id=" + id +
                 ", amount=" + amount +
                 ", timestamp=" + timestamp +

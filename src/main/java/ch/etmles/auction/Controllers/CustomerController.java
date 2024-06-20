@@ -2,6 +2,8 @@ package ch.etmles.auction.Controllers;
 
 import ch.etmles.auction.Entities.Customer;
 import ch.etmles.auction.Repositories.CustomerRepository;
+import ch.etmles.auction.Exceptions.CustomerErrorException.CustomerNotFoundException;
+import ch.etmles.auction.Exceptions.CustomerErrorException.CustomerAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +28,16 @@ public class CustomerController {
 
     @PostMapping
     public Customer addUser(@RequestBody Customer user) {
+        if (customerRepository.existsById(user.getId())) {
+            throw new CustomerAlreadyExistsException(user.getId());
+        }
         return customerRepository.save(user);
     }
 
     @GetMapping("/{id}")
     public Customer getUserById(@PathVariable Long id) {
         return customerRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+                .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
     @PutMapping("/{id}")

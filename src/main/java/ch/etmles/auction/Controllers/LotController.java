@@ -1,12 +1,14 @@
 package ch.etmles.auction.Controllers;
 
 import ch.etmles.auction.Entities.Lot;
-import ch.etmles.auction.Entities.Enchere;
+import ch.etmles.auction.Entities.Auction;
 import ch.etmles.auction.Repositories.LotRepository;
 import ch.etmles.auction.Repositories.EnchereRepository;
 import ch.etmles.auction.Repositories.CustomerRepository;
 import ch.etmles.auction.Services.NotificationService;
 import ch.etmles.auction.config.IdUtil;
+import ch.etmles.auction.Exceptions.LotErrorException.InvalidLotException;
+import ch.etmles.auction.Exceptions.LotErrorException.LotNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,7 +67,7 @@ public class LotController {
     public Lot addLot(@RequestBody Lot lot) {
         if (lot.getDescription() == null || lot.getDescription().isEmpty() ||
                 lot.getCategory() == null || lot.getInitialPrice() <= 0) {
-            throw new IllegalArgumentException("Invalid lot details");
+            throw new InvalidLotException("Invalid lot details");
         }
         return lotRepository.save(lot);
     }
@@ -74,7 +76,7 @@ public class LotController {
     public Lot getLotById(@PathVariable String encodedId) {
         Long id = IdUtil.decodeId(encodedId);
         return lotRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
+                .orElseThrow(() -> new LotNotFoundException(id));
     }
 
     @PutMapping("/{encodedId}")
@@ -97,8 +99,8 @@ public class LotController {
     @DeleteMapping("/{encodedId}")
     public void deleteLot(@PathVariable String encodedId) {
         Long id = IdUtil.decodeId(encodedId);
-        lotRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
+        Lot lot = lotRepository.findById(id)
+                .orElseThrow(() -> new LotNotFoundException(id));
         lotRepository.deleteById(id);
     }
 
@@ -107,7 +109,7 @@ public class LotController {
         Long id = IdUtil.decodeId(encodedId);
         return lotRepository.findById(id)
                 .map(lot -> {
-                    Optional<Enchere> highestBid = enchereRepository.findTopByLotIdOrderByAmountDesc(id);
+                    Optional<Auction> highestBid = enchereRepository.findTopByLotIdOrderByAmountDesc(id);
 
                     if (highestBid.isPresent()) {
                         lot.setHighestBidder(highestBid.get().getCustomer());
@@ -131,7 +133,7 @@ public class LotController {
 
                     return lotRepository.save(lot);
                 })
-                .orElseThrow(() -> new IllegalArgumentException("Lot not found"));
+                .orElseThrow(() -> new LotNotFoundException(id));
     }
 
     @GetMapping("/bid/{customerId}")

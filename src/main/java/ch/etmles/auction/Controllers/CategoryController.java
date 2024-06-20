@@ -2,6 +2,8 @@ package ch.etmles.auction.Controllers;
 
 import ch.etmles.auction.Entities.Category;
 import ch.etmles.auction.Repositories.CategoryRepository;
+import ch.etmles.auction.Exceptions.CategoryErrorException.CategoryNotFoundException;
+import ch.etmles.auction.Exceptions.CategoryErrorException.CategoryAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,9 @@ public class CategoryController {
 
     @PostMapping
     public Category addCategory(@RequestBody Category category) {
+        if (repository.existsById(category.getId())) {
+            throw new CategoryAlreadyExistsException(category.getId());
+        }
         return repository.save(category);
     }
 
@@ -33,5 +38,4 @@ public class CategoryController {
         return repository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException(id));
     }
-
 }
